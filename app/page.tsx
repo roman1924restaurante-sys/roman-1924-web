@@ -782,7 +782,7 @@ export default function Home() {
                           />
 
                           <div
-                            className={`pointer-events-none absolute [45.5%] top-[26.8%] z-10 w-[34%] -translate-x-1/2 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                            className={`pointer-events-none absolute left-1/2 top-[35.5%] z-10 w-[32%] -translate-x-1/2 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
                               showCartaText
                                 ? "translate-x-0 opacity-100"
                                 : "-translate-x-4 opacity-0"
