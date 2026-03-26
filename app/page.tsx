@@ -20,6 +20,9 @@ export default function Home() {
   const RESERVATION_URL =
     "https://www.covermanager.com/reservation/module_restaurant/restaurante-roman-1924/spanish";
 
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+
   const [openCarta, setOpenCarta] = useState(false);
   const [showCartaText, setShowCartaText] = useState(false);
   const [currentCarta, setCurrentCarta] = useState(0);
@@ -96,6 +99,19 @@ export default function Home() {
     tastingMenus.find((menu) => menu.key === activeMenu) ?? tastingMenus[0];
 
   useEffect(() => {
+    const checkViewport = () => {
+      const width = window.innerWidth;
+      setIsMobile(width < 768);
+      setIsTablet(width >= 768 && width < 1024);
+    };
+
+    checkViewport();
+    window.addEventListener("resize", checkViewport);
+
+    return () => window.removeEventListener("resize", checkViewport);
+  }, []);
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       setShowCartaText(true);
     }, 350);
@@ -109,6 +125,10 @@ export default function Home() {
 
     const handleScroll = () => {
       if (!originCartaRef.current) return;
+      if (window.innerWidth < 1024) {
+        setOriginCartaProgress(0);
+        return;
+      }
 
       const rect = originCartaRef.current.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
@@ -207,14 +227,14 @@ export default function Home() {
   }, [openMenuModal, activeMenuData.images.length]);
 
   useEffect(() => {
-    if (isEspacioPaused) return;
+    if (isEspacioPaused || isMobile) return;
 
     const interval = setInterval(() => {
       setCurrentEspacio((prev) => (prev + 1) % espacioImages.length);
     }, 4300);
 
     return () => clearInterval(interval);
-  }, [espacioImages.length, isEspacioPaused]);
+  }, [espacioImages.length, isEspacioPaused, isMobile]);
 
   useEffect(() => {
     const node = espacioSectionRef.current;
@@ -222,17 +242,12 @@ export default function Home() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsEspacioIntroVisible(true);
-        }
+        if (entry.isIntersecting) setIsEspacioIntroVisible(true);
       },
-      {
-        threshold: 0.18,
-      }
+      { threshold: 0.18 }
     );
 
     observer.observe(node);
-
     return () => observer.disconnect();
   }, []);
 
@@ -242,17 +257,12 @@ export default function Home() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsTransitionVisible(true);
-        }
+        if (entry.isIntersecting) setIsTransitionVisible(true);
       },
-      {
-        threshold: 0.22,
-      }
+      { threshold: 0.22 }
     );
 
     observer.observe(node);
-
     return () => observer.disconnect();
   }, []);
 
@@ -262,17 +272,12 @@ export default function Home() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsMenusVisible(true);
-        }
+        if (entry.isIntersecting) setIsMenusVisible(true);
       },
-      {
-        threshold: 0.18,
-      }
+      { threshold: 0.18 }
     );
 
     observer.observe(node);
-
     return () => observer.disconnect();
   }, []);
 
@@ -375,10 +380,10 @@ export default function Home() {
 
   return (
     <main
-      className="min-h-screen scroll-smooth text-[#4b2e2a]"
+      className="min-h-screen overflow-x-hidden scroll-smooth text-[#4b2e2a]"
       style={{ backgroundColor: SOFT_BEIGE }}
     >
-      <section className="relative h-[92svh] min-h-[780px] overflow-hidden bg-[#120d0a]">
+      <section className="relative min-h-[100svh] overflow-hidden bg-[#120d0a] md:h-[92svh] md:min-h-[780px]">
         <div className="absolute inset-0 cinematic-zoom-hero">
           <Image
             src="/hero-roman.png"
@@ -386,6 +391,7 @@ export default function Home() {
             fill
             priority
             className="object-cover"
+            sizes="100vw"
           />
         </div>
 
@@ -394,15 +400,27 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/12 via-transparent to-black/16" />
 
         <header className="absolute left-0 top-0 z-30 w-full">
-          <div className="mx-auto flex max-w-[1440px] items-center justify-between px-8 py-6 md:px-12 md:py-7">
-            <div className="relative h-14 w-[170px]">
+          <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 sm:px-6 md:px-12 md:py-7">
+            <div className="relative h-11 w-[135px] sm:h-12 sm:w-[150px] md:h-14 md:w-[170px]">
               <Image
                 src="/logo-roman.svg"
                 alt="Logo de Roman 1924"
                 fill
                 className="object-contain"
                 priority
+                sizes="170px"
               />
+            </div>
+
+            <div className="md:hidden">
+              <a
+                href={RESERVATION_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-sans inline-flex items-center justify-center rounded-full border border-white/20 bg-white/8 px-4 py-2 text-[11px] uppercase tracking-[0.12em] text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/16"
+              >
+                Reservar
+              </a>
             </div>
 
             <nav className="font-sans hidden items-center gap-7 text-[15px] uppercase tracking-[0.14em] text-white/95 md:flex">
@@ -436,29 +454,29 @@ export default function Home() {
           </div>
         </header>
 
-        <div className="relative z-20 mx-auto flex h-full max-w-[1440px] items-center px-8 pt-16 md:px-12">
+        <div className="relative z-20 mx-auto flex min-h-[100svh] max-w-[1440px] items-center px-5 pb-10 pt-24 sm:px-6 md:h-full md:min-h-0 md:px-12 md:pt-16">
           <div className="max-w-[760px] animate-fade-up">
-            <p className="font-sans mb-6 text-sm uppercase tracking-[0.24em] text-white/78">
+            <p className="font-sans mb-5 text-[11px] uppercase tracking-[0.22em] text-white/78 sm:text-sm sm:tracking-[0.24em]">
               ROMÁN 1924
             </p>
 
-            <h1 className="font-serif max-w-[760px] text-[clamp(4rem,7.3vw,7.4rem)] leading-[0.92] text-white">
+            <h1 className="font-serif max-w-[760px] text-[clamp(2.55rem,9vw,7.4rem)] leading-[0.95] text-white sm:text-[clamp(3.2rem,8vw,7.4rem)]">
               Herencia puesta sobre la mesa.
             </h1>
 
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-4">
               <a
                 href={RESERVATION_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-sans inline-flex items-center justify-center rounded-full bg-[#241712] px-7 py-3.5 text-sm uppercase tracking-[0.14em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1a100c]"
+                className="font-sans inline-flex items-center justify-center rounded-full bg-[#241712] px-6 py-3.5 text-[11px] uppercase tracking-[0.14em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1a100c] sm:px-7 sm:text-sm"
               >
                 Reservar
               </a>
 
               <a
                 href="#origen"
-                className="font-sans inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm uppercase tracking-[0.14em] text-[#241712] transition-all duration-300 hover:-translate-y-0.5 hover:bg-white"
+                className="font-sans inline-flex items-center justify-center rounded-full px-6 py-3.5 text-[11px] uppercase tracking-[0.14em] text-[#241712] transition-all duration-300 hover:-translate-y-0.5 hover:bg-white sm:px-7 sm:text-sm"
                 style={{ backgroundColor: SOFT_BEIGE }}
               >
                 Descubrir concepto
@@ -469,147 +487,247 @@ export default function Home() {
       </section>
 
       <section
-        className="h-16 md:h-24"
+        className="h-10 md:h-24"
         style={{ backgroundColor: SOFT_BEIGE }}
       />
 
       <section
         id="origen"
         ref={originCartaRef}
-        className="relative h-[240vh]"
+        className="relative"
         style={{ backgroundColor: SOFT_BEIGE }}
       >
-        <div className="sticky top-0 h-screen overflow-hidden">
-          <div
-            className="absolute inset-0 will-change-transform"
-            style={{
-              opacity: originOpacity,
-              transform: `translateY(${originTranslateY}px) scale(${originScale})`,
-              filter: `blur(${originBlur}px)`,
-            }}
-          >
-            <div className="absolute inset-0">
+        {isMobile ? (
+          <section className="relative overflow-hidden">
+            <div className="relative min-h-[72svh]">
               <Image
                 src="/libreria-roman.png"
                 alt="Librería interior de Roman 1924"
                 fill
                 className="object-cover"
+                sizes="100vw"
+                priority
               />
-            </div>
 
-            <div className="absolute inset-0 bg-black/28" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/18 via-transparent to-black/14" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/8 via-black/12 to-black/18" />
+              <div className="absolute inset-0 bg-black/34" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/12 via-black/12 to-black/40" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/16 via-transparent to-black/10" />
 
-            <div
-              className="absolute inset-x-0 bottom-0 h-[46%]"
-              style={{
-                background:
-                  "linear-gradient(to bottom, rgba(238,230,216,0) 0%, rgba(238,230,216,0.10) 20%, rgba(238,230,216,0.30) 45%, rgba(238,230,216,0.65) 72%, rgba(238,230,216,0.94) 92%, rgba(238,230,216,1) 100%)",
-              }}
-            />
-
-            <div
-              className="absolute inset-x-0 bottom-0 h-[24%]"
-              style={{
-                background:
-                  "radial-gradient(ellipse at center bottom, rgba(238,230,216,0.08) 0%, rgba(238,230,216,0.35) 35%, rgba(238,230,216,0.82) 78%, rgba(238,230,216,1) 100%)",
-              }}
-            />
-
-            <div className="relative z-20 mx-auto h-full max-w-[1440px] px-8 pt-24 md:px-12 md:pt-28">
-              <div className="grid max-w-[1360px] gap-10 lg:grid-cols-[1.18fr_0.82fr] lg:items-start lg:gap-16">
-                <div className="max-w-[860px]">
-                  <p className="font-sans mb-7 text-sm uppercase tracking-[0.22em] text-[#d7c6a3]">
+              <div className="relative z-10 mx-auto flex min-h-[72svh] max-w-[1440px] items-end px-5 pb-10 pt-24">
+                <div className="max-w-[720px]">
+                  <p className="font-sans mb-4 text-[11px] uppercase tracking-[0.18em] text-[#d7c6a3]">
                     EL ORIGEN
                   </p>
 
-                  <h2 className="font-serif max-w-[900px] text-[clamp(3.4rem,6.2vw,6.5rem)] leading-[0.93] tracking-[-0.03em] text-white">
+                  <h2 className="font-serif text-[clamp(2rem,9vw,3.6rem)] leading-[0.98] tracking-[-0.03em] text-white">
                     Memoria, territorio
                     <br />
                     y una mirada
                     <br />
                     contemporánea.
                   </h2>
-                </div>
 
-                <div className="max-w-[460px] pt-3 lg:pt-24">
-                  <p className="font-sans text-[clamp(0.98rem,1.08vw,1.08rem)] leading-[1.72] tracking-[0.002em] text-white/84">
-                    ROMÁN 1924 nace del recuerdo de una forma de vivir y de
-                    comer marcada por la tierra, las estaciones y el respeto por
-                    el producto. Inspirado en la figura de Román, el restaurante
-                    lleva al presente una cocina honesta, precisa y
-                    profundamente vinculada al sabor.
+                  <p className="mt-6 max-w-[34rem] font-sans text-[0.98rem] leading-[1.75] tracking-[0.002em] text-white/84">
+                    ROMÁN 1924 nace del recuerdo de una forma de vivir y de comer
+                    marcada por la tierra, las estaciones y el respeto por el
+                    producto. Inspirado en la figura de Román, el restaurante
+                    lleva al presente una cocina honesta, precisa y profundamente
+                    vinculada al sabor.
                   </p>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div
-            className="absolute inset-0 z-30 flex items-end will-change-transform"
-            style={{
-              opacity: cartaOpacity,
-              transform: `translateY(${cartaTranslateY}px) scale(${cartaScale})`,
-            }}
-          >
-            <div
-              id="carta"
-              className="w-full rounded-t-[46px] shadow-[0_-30px_90px_rgba(0,0,0,0.12)] md:rounded-t-[52px]"
-              style={{ backgroundColor: SOFT_BEIGE }}
-            >
-              <div className="mx-auto grid max-w-[1400px] gap-12 px-6 pb-6 pt-14 md:px-8 md:pb-8 md:pt-20 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
-                <div className="flex justify-center lg:justify-start">
-                  <div className="relative w-full max-w-[760px]">
-                    <div className="relative mx-auto w-full max-w-[720px]">
-                      <Image
-                        src="/carta-sobre.png"
-                        alt="Sobre de la carta de Roman 1924"
-                        width={900}
-                        height={1200}
-                        className="h-auto w-full object-contain drop-shadow-[0_30px_55px_rgba(59,36,24,0.12)]"
-                        priority
-                      />
+            <div className="relative -mt-6 rounded-t-[28px] px-5 pb-10 pt-8 shadow-[0_-18px_50px_rgba(0,0,0,0.08)]">
+              <div
+                className="absolute inset-0 rounded-t-[28px]"
+                style={{ backgroundColor: SOFT_BEIGE }}
+              />
+              <div className="relative z-10 mx-auto max-w-[1200px]">
+                <div className="flex flex-col items-center gap-8">
+                  <div className="relative w-full max-w-[320px]">
+                    <Image
+                      src="/carta-sobre.png"
+                      alt="Sobre de la carta de Roman 1924"
+                      width={900}
+                      height={1200}
+                      className="h-auto w-full object-contain drop-shadow-[0_26px_50px_rgba(59,36,24,0.12)]"
+                      priority
+                    />
 
-                      <div
-                        className={`pointer-events-none absolute left-[38.2%] top-[28.8%] z-10 w-[30%] -translate-x-1/2 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                          showCartaText
-                            ? "translate-x-0 opacity-100"
-                            : "-translate-x-4 opacity-0"
-                        }`}
-                      >
-                        <div className="text-center">
-                          <div className="space-y-[0.56rem] md:space-y-[0.68rem]">
-                            <p className="font-serif text-[clamp(1.02rem,1.18vw,1.28rem)] leading-[1.4] tracking-[0.004em] text-[#7a5b4d]">
-                              Habitas verdes braseadas
-                            </p>
-                            <p className="font-serif text-[clamp(1.02rem,1.18vw,1.28rem)] leading-[1.4] tracking-[0.004em] text-[#7a5b4d]">
-                              Lenteja con paloma torcaz
-                            </p>
-                            <p className="font-serif text-[clamp(1.02rem,1.18vw,1.28rem)] leading-[1.4] tracking-[0.004em] text-[#7a5b4d]">
-                              Mero Negro
-                            </p>
-                            <p className="font-serif text-[clamp(1.02rem,1.18vw,1.28rem)] leading-[1.4] tracking-[0.004em] text-[#7a5b4d]">
-                              Codorniz Escabechada
-                            </p>
-                            <p className="font-serif text-[clamp(1.02rem,1.18vw,1.28rem)] leading-[1.4] tracking-[0.004em] text-[#7a5b4d]">
-                              Lechazo Churro
-                            </p>
-                          </div>
+                    <div
+                      className={`pointer-events-none absolute left-[38.2%] top-[28.8%] z-10 w-[31%] -translate-x-1/2 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                        showCartaText
+                          ? "translate-x-0 opacity-100"
+                          : "-translate-x-4 opacity-0"
+                      }`}
+                    >
+                      <div className="text-center">
+                        <div className="space-y-[0.28rem]">
+                          <p className="font-serif text-[clamp(0.58rem,2vw,0.88rem)] leading-[1.32] text-[#7a5b4d]">
+                            Habitas verdes braseadas
+                          </p>
+                          <p className="font-serif text-[clamp(0.58rem,2vw,0.88rem)] leading-[1.32] text-[#7a5b4d]">
+                            Lenteja con paloma torcaz
+                          </p>
+                          <p className="font-serif text-[clamp(0.58rem,2vw,0.88rem)] leading-[1.32] text-[#7a5b4d]">
+                            Mero Negro
+                          </p>
+                          <p className="font-serif text-[clamp(0.58rem,2vw,0.88rem)] leading-[1.32] text-[#7a5b4d]">
+                            Codorniz Escabechada
+                          </p>
+                          <p className="font-serif text-[clamp(0.58rem,2vw,0.88rem)] leading-[1.32] text-[#7a5b4d]">
+                            Lechazo Churro
+                          </p>
                         </div>
                       </div>
+                    </div>
+                  </div>
 
-                      <div className="pointer-events-none absolute inset-0 rounded-[28px] bg-gradient-to-br from-white/18 via-transparent to-transparent opacity-70" />
+                  <div className="max-w-[640px] text-center">
+                    <p className="font-sans mb-4 text-[11px] uppercase tracking-[0.18em] text-[#9b8b68]">
+                      LA CARTA
+                    </p>
+
+                    <h3 className="font-serif text-[clamp(2rem,8vw,3.4rem)] leading-[1.04] tracking-[-0.03em] text-[#4b2e2a]">
+                      Una selección que
+                      <br />
+                      cambia con la
+                      <br />
+                      estación.
+                    </h3>
+
+                    <div
+                      id="carta-cta"
+                      className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center"
+                    >
+                      <button
+                        onClick={openCartaModal}
+                        className="group relative overflow-hidden rounded-full bg-[#241712] px-7 py-3.5 font-sans text-[11px] uppercase tracking-[0.14em] text-white shadow-[0_14px_32px_rgba(36,23,18,0.16)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1a100c]"
+                      >
+                        <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/8 to-white/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                        <span className="relative z-10">Ver carta completa</span>
+                      </button>
+
+                      <a
+                        href={RESERVATION_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-full border border-[#241712]/14 bg-white/32 px-7 py-3.5 text-center font-sans text-[11px] uppercase tracking-[0.14em] text-[#241712] backdrop-blur-[2px] transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/52"
+                      >
+                        Reservar
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        ) : isTablet ? (
+          <section className="relative overflow-hidden">
+            <div className="relative min-h-[88svh]">
+              <Image
+                src="/libreria-roman.png"
+                alt="Librería interior de Roman 1924"
+                fill
+                className="object-cover"
+                sizes="100vw"
+              />
+
+              <div className="absolute inset-0 bg-black/30" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/14" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 to-black/24" />
+
+              <div
+                className="absolute inset-x-0 bottom-0 h-[42%]"
+                style={{
+                  background:
+                    "linear-gradient(to bottom, rgba(238,230,216,0) 0%, rgba(238,230,216,0.18) 24%, rgba(238,230,216,0.52) 58%, rgba(238,230,216,0.9) 86%, rgba(238,230,216,1) 100%)",
+                }}
+              />
+
+              <div className="relative z-10 mx-auto max-w-[1440px] px-8 pb-24 pt-24">
+                <div className="grid items-end gap-10">
+                  <div className="max-w-[760px]">
+                    <p className="font-sans mb-5 text-[11px] uppercase tracking-[0.18em] text-[#d7c6a3]">
+                      EL ORIGEN
+                    </p>
+
+                    <h2 className="font-serif text-[clamp(3rem,6vw,4.8rem)] leading-[0.98] tracking-[-0.03em] text-white">
+                      Memoria, territorio
+                      <br />
+                      y una mirada
+                      <br />
+                      contemporánea.
+                    </h2>
+                  </div>
+
+                  <div className="max-w-[520px]">
+                    <p className="font-sans text-[1rem] leading-[1.8] tracking-[0.002em] text-white/84">
+                      ROMÁN 1924 nace del recuerdo de una forma de vivir y de
+                      comer marcada por la tierra, las estaciones y el respeto
+                      por el producto. Inspirado en la figura de Román, el
+                      restaurante lleva al presente una cocina honesta, precisa y
+                      profundamente vinculada al sabor.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="carta"
+              className="relative -mt-8 rounded-t-[40px] shadow-[0_-24px_70px_rgba(0,0,0,0.10)]"
+              style={{ backgroundColor: SOFT_BEIGE }}
+            >
+              <div className="mx-auto grid max-w-[1400px] gap-10 px-8 pb-10 pt-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+                <div className="flex justify-center">
+                  <div className="relative w-full max-w-[420px]">
+                    <Image
+                      src="/carta-sobre.png"
+                      alt="Sobre de la carta de Roman 1924"
+                      width={900}
+                      height={1200}
+                      className="h-auto w-full object-contain drop-shadow-[0_30px_55px_rgba(59,36,24,0.12)]"
+                      priority
+                    />
+
+                    <div
+                      className={`pointer-events-none absolute left-[38.2%] top-[28.8%] z-10 w-[31%] -translate-x-1/2 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                        showCartaText
+                          ? "translate-x-0 opacity-100"
+                          : "-translate-x-4 opacity-0"
+                      }`}
+                    >
+                      <div className="text-center">
+                        <div className="space-y-[0.42rem]">
+                          <p className="font-serif text-[clamp(0.7rem,1.35vw,1rem)] leading-[1.32] text-[#7a5b4d]">
+                            Habitas verdes braseadas
+                          </p>
+                          <p className="font-serif text-[clamp(0.7rem,1.35vw,1rem)] leading-[1.32] text-[#7a5b4d]">
+                            Lenteja con paloma torcaz
+                          </p>
+                          <p className="font-serif text-[clamp(0.7rem,1.35vw,1rem)] leading-[1.32] text-[#7a5b4d]">
+                            Mero Negro
+                          </p>
+                          <p className="font-serif text-[clamp(0.7rem,1.35vw,1rem)] leading-[1.32] text-[#7a5b4d]">
+                            Codorniz Escabechada
+                          </p>
+                          <p className="font-serif text-[clamp(0.7rem,1.35vw,1rem)] leading-[1.32] text-[#7a5b4d]">
+                            Lechazo Churro
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="max-w-[640px] lg:pl-6">
-                  <p className="font-sans mb-6 text-sm uppercase tracking-[0.2em] text-[#9b8b68]">
+                <div className="max-w-[620px]">
+                  <p className="font-sans mb-5 text-[11px] uppercase tracking-[0.18em] text-[#9b8b68]">
                     LA CARTA
                   </p>
 
-                  <h3 className="font-serif text-[clamp(3.1rem,5.3vw,5.8rem)] leading-[1.01] tracking-[-0.03em] text-[#4b2e2a]">
+                  <h3 className="font-serif text-[clamp(2.6rem,5vw,4.4rem)] leading-[1.04] tracking-[-0.03em] text-[#4b2e2a]">
                     Una selección que
                     <br />
                     cambia con la
@@ -619,11 +737,11 @@ export default function Home() {
 
                   <div
                     id="carta-cta"
-                    className="mt-10 flex flex-wrap items-center gap-4"
+                    className="mt-8 flex flex-wrap items-center gap-4"
                   >
                     <button
                       onClick={openCartaModal}
-                      className="group relative overflow-hidden rounded-full bg-[#241712] px-8 py-4 font-sans text-sm uppercase tracking-[0.14em] text-white shadow-[0_14px_32px_rgba(36,23,18,0.16)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_42px_rgba(36,23,18,0.22)] hover:bg-[#1a100c]"
+                      className="group relative overflow-hidden rounded-full bg-[#241712] px-7 py-3.5 font-sans text-[11px] uppercase tracking-[0.14em] text-white shadow-[0_14px_32px_rgba(36,23,18,0.16)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1a100c]"
                     >
                       <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/8 to-white/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                       <span className="relative z-10">Ver carta completa</span>
@@ -633,7 +751,7 @@ export default function Home() {
                       href={RESERVATION_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group rounded-full border border-[#241712]/14 bg-white/28 px-8 py-4 font-sans text-sm uppercase tracking-[0.14em] text-[#241712] backdrop-blur-[2px] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#241712]/28 hover:bg-white/52 hover:shadow-[0_12px_26px_rgba(75,46,42,0.08)]"
+                      className="rounded-full border border-[#241712]/14 bg-white/32 px-7 py-3.5 text-center font-sans text-[11px] uppercase tracking-[0.14em] text-[#241712] backdrop-blur-[2px] transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/52"
                     >
                       Reservar
                     </a>
@@ -641,8 +759,178 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </section>
+        ) : (
+          <section className="relative md:h-[240vh]">
+            <div className="relative overflow-hidden md:sticky md:top-0 md:h-screen">
+              <div
+                className="absolute inset-0 will-change-transform"
+                style={{
+                  opacity: originOpacity,
+                  transform: `translateY(${originTranslateY}px) scale(${originScale})`,
+                  filter: `blur(${originBlur}px)`,
+                }}
+              >
+                <div className="absolute inset-0">
+                  <Image
+                    src="/libreria-roman.png"
+                    alt="Librería interior de Roman 1924"
+                    fill
+                    className="object-cover"
+                    sizes="100vw"
+                  />
+                </div>
+
+                <div className="absolute inset-0 bg-black/28" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/18 via-transparent to-black/14" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/8 via-black/12 to-black/18" />
+
+                <div
+                  className="absolute inset-x-0 bottom-0 h-[46%]"
+                  style={{
+                    background:
+                      "linear-gradient(to bottom, rgba(238,230,216,0) 0%, rgba(238,230,216,0.10) 20%, rgba(238,230,216,0.30) 45%, rgba(238,230,216,0.65) 72%, rgba(238,230,216,0.94) 92%, rgba(238,230,216,1) 100%)",
+                  }}
+                />
+
+                <div
+                  className="absolute inset-x-0 bottom-0 h-[24%]"
+                  style={{
+                    background:
+                      "radial-gradient(ellipse at center bottom, rgba(238,230,216,0.08) 0%, rgba(238,230,216,0.35) 35%, rgba(238,230,216,0.82) 78%, rgba(238,230,216,1) 100%)",
+                  }}
+                />
+
+                <div className="relative z-20 mx-auto h-full max-w-[1440px] px-5 pb-16 pt-20 sm:px-6 md:px-12 md:pt-28">
+                  <div className="grid max-w-[1360px] gap-8 md:gap-10 lg:grid-cols-[1.18fr_0.82fr] lg:items-start lg:gap-16">
+                    <div className="max-w-[860px]">
+                      <p className="font-sans mb-6 text-[11px] uppercase tracking-[0.2em] text-[#d7c6a3] sm:text-sm sm:tracking-[0.22em]">
+                        EL ORIGEN
+                      </p>
+
+                      <h2 className="font-serif max-w-[900px] text-[clamp(2.2rem,8vw,6.5rem)] leading-[0.98] tracking-[-0.03em] text-white">
+                        Memoria, territorio
+                        <br />
+                        y una mirada
+                        <br />
+                        contemporánea.
+                      </h2>
+                    </div>
+
+                    <div className="max-w-[460px] pt-1 md:pt-3 lg:pt-24">
+                      <p className="font-sans text-[0.96rem] leading-[1.75] tracking-[0.002em] text-white/84 md:text-[clamp(0.98rem,1.08vw,1.08rem)] md:leading-[1.72]">
+                        ROMÁN 1924 nace del recuerdo de una forma de vivir y de
+                        comer marcada por la tierra, las estaciones y el respeto
+                        por el producto. Inspirado en la figura de Román, el
+                        restaurante lleva al presente una cocina honesta, precisa
+                        y profundamente vinculada al sabor.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                className="relative z-30 flex items-end will-change-transform md:absolute md:inset-0"
+                style={{
+                  opacity: cartaOpacity,
+                  transform: `translateY(${cartaTranslateY}px) scale(${cartaScale})`,
+                }}
+              >
+                <div
+                  id="carta"
+                  className="mt-0 w-full rounded-t-[52px] shadow-[0_-30px_90px_rgba(0,0,0,0.12)]"
+                  style={{ backgroundColor: SOFT_BEIGE }}
+                >
+                  <div className="mx-auto grid max-w-[1400px] gap-10 px-5 pb-8 pt-20 sm:px-6 md:px-8 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:gap-12">
+                    <div className="flex justify-center lg:justify-start">
+                      <div className="relative w-full max-w-[760px]">
+                        <div className="relative mx-auto w-full max-w-[580px] md:max-w-[640px] lg:max-w-[720px]">
+                          <Image
+                            src="/carta-sobre.png"
+                            alt="Sobre de la carta de Roman 1924"
+                            width={900}
+                            height={1200}
+                            className="h-auto w-full object-contain drop-shadow-[0_30px_55px_rgba(59,36,24,0.12)]"
+                            priority
+                          />
+
+                          <div
+                            className={`pointer-events-none absolute left-[38.2%] top-[28.8%] z-10 w-[31%] -translate-x-1/2 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] sm:w-[30%] ${
+                              showCartaText
+                                ? "translate-x-0 opacity-100"
+                                : "-translate-x-4 opacity-0"
+                            }`}
+                          >
+                            <div className="text-center">
+                              <div className="space-y-[0.5rem] md:space-y-[0.68rem]">
+                                <p className="font-serif text-[clamp(0.68rem,1.55vw,1.28rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
+                                  Habitas verdes braseadas
+                                </p>
+                                <p className="font-serif text-[clamp(0.68rem,1.55vw,1.28rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
+                                  Lenteja con paloma torcaz
+                                </p>
+                                <p className="font-serif text-[clamp(0.68rem,1.55vw,1.28rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
+                                  Mero Negro
+                                </p>
+                                <p className="font-serif text-[clamp(0.68rem,1.55vw,1.28rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
+                                  Codorniz Escabechada
+                                </p>
+                                <p className="font-serif text-[clamp(0.68rem,1.55vw,1.28rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
+                                  Lechazo Churro
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="pointer-events-none absolute inset-0 rounded-[28px] bg-gradient-to-br from-white/18 via-transparent to-transparent opacity-70" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="max-w-[640px] lg:pl-6">
+                      <p className="font-sans mb-5 text-[11px] uppercase tracking-[0.18em] text-[#9b8b68] sm:text-sm sm:tracking-[0.2em]">
+                        LA CARTA
+                      </p>
+
+                      <h3 className="font-serif text-[clamp(2.3rem,6vw,5.8rem)] leading-[1.04] tracking-[-0.03em] text-[#4b2e2a]">
+                        Una selección que
+                        <br />
+                        cambia con la
+                        <br />
+                        estación.
+                      </h3>
+
+                      <div
+                        id="carta-cta"
+                        className="mt-8 flex flex-wrap items-center gap-4 sm:mt-10"
+                      >
+                        <button
+                          onClick={openCartaModal}
+                          className="group relative overflow-hidden rounded-full bg-[#241712] px-7 py-3.5 font-sans text-[11px] uppercase tracking-[0.14em] text-white shadow-[0_14px_32px_rgba(36,23,18,0.16)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1a100c] hover:shadow-[0_20px_42px_rgba(36,23,18,0.22)] sm:px-8 sm:py-4 sm:text-sm"
+                        >
+                          <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/8 to-white/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                          <span className="relative z-10">
+                            Ver carta completa
+                          </span>
+                        </button>
+
+                        <a
+                          href={RESERVATION_URL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="rounded-full border border-[#241712]/14 bg-white/28 px-7 py-3.5 text-center font-sans text-[11px] uppercase tracking-[0.14em] text-[#241712] backdrop-blur-[2px] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#241712]/28 hover:bg-white/52"
+                        >
+                          Reservar
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
       </section>
 
       <section
@@ -650,7 +938,7 @@ export default function Home() {
         className="relative overflow-hidden pb-8 pt-0 md:pb-10 md:pt-2"
         style={{ backgroundColor: SOFT_BEIGE }}
       >
-        <div className="mx-auto max-w-[1440px] px-6 md:px-12">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-6 md:px-12">
           <div
             className={`mx-auto max-w-[980px] text-center transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
               isMenusVisible
@@ -658,17 +946,17 @@ export default function Home() {
                 : "translate-y-10 opacity-0"
             }`}
           >
-            <p className="font-sans mb-6 text-sm uppercase tracking-[0.18em] text-[#9b8b68]">
+            <p className="font-sans mb-5 text-[11px] uppercase tracking-[0.16em] text-[#9b8b68] sm:mb-6 sm:text-sm sm:tracking-[0.18em]">
               MENÚS DEGUSTACIÓN
             </p>
 
-            <h3 className="font-serif text-[clamp(2.8rem,4.9vw,5.4rem)] leading-[1.02] tracking-[-0.03em] text-[#4b2e2a]">
+            <h3 className="font-serif text-[clamp(2rem,7vw,5.4rem)] leading-[1.04] tracking-[-0.03em] text-[#4b2e2a] sm:text-[clamp(2.5rem,6vw,5.4rem)]">
               Dos recorridos para
               <br />
               descubrir nuestra cocina.
             </h3>
 
-            <p className="mx-auto mt-8 max-w-[760px] font-sans text-[1rem] leading-[1.9] tracking-[0.002em] text-[#4b2e2a]/74 md:text-[1.06rem]">
+            <p className="mx-auto mt-6 max-w-[760px] font-sans text-[0.98rem] leading-[1.85] tracking-[0.002em] text-[#4b2e2a]/74 md:mt-8 md:text-[1.06rem] md:leading-[1.9]">
               Una propuesta más amplia y otra más esencial, ambas construidas
               desde la memoria, el producto, la estación y una forma de cocinar
               sin artificio.
@@ -676,7 +964,7 @@ export default function Home() {
           </div>
 
           <div
-            className={`mx-auto mt-12 grid max-w-[1280px] gap-8 transition-all duration-[1500ms] delay-150 ease-[cubic-bezier(0.22,1,0.36,1)] md:mt-14 lg:grid-cols-2 ${
+            className={`mx-auto mt-10 grid max-w-[1280px] gap-5 transition-all duration-[1500ms] delay-150 ease-[cubic-bezier(0.22,1,0.36,1)] sm:mt-12 md:mt-14 md:gap-8 lg:grid-cols-2 ${
               isMenusVisible
                 ? "translate-y-0 opacity-100"
                 : "translate-y-12 opacity-0"
@@ -685,47 +973,47 @@ export default function Home() {
             {tastingMenus.map((menu) => (
               <article
                 key={menu.key}
-                className="group relative overflow-hidden rounded-[30px] border border-[#b9a78d]/18 bg-[rgba(255,255,255,0.34)] shadow-[0_20px_60px_rgba(62,38,25,0.05)] backdrop-blur-[2px]"
+                className="group relative overflow-hidden rounded-[20px] border border-[#b9a78d]/18 bg-[rgba(255,255,255,0.34)] shadow-[0_20px_60px_rgba(62,38,25,0.05)] backdrop-blur-[2px] sm:rounded-[24px] md:rounded-[30px]"
               >
                 <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#9b8b68]/45 to-transparent" />
                 <div className="absolute left-0 top-0 h-full w-full bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.26),transparent_56%)] opacity-70" />
 
-                <div className="relative flex h-full flex-col px-7 pb-8 pt-8 md:px-9 md:pb-9 md:pt-9">
-                  <div className="flex items-start justify-between gap-6">
+                <div className="relative flex h-full flex-col px-5 pb-6 pt-6 sm:px-6 md:px-9 md:pb-9 md:pt-9">
+                  <div className="flex items-start justify-between gap-5 sm:gap-6">
                     <div>
-                      <p className="font-sans text-[10px] uppercase tracking-[0.26em] text-[#9b8b68]">
+                      <p className="font-sans text-[10px] uppercase tracking-[0.22em] text-[#9b8b68] sm:tracking-[0.26em]">
                         {menu.label}
                       </p>
 
-                      <h4 className="mt-5 font-serif text-[clamp(2.2rem,3.5vw,3.3rem)] leading-none tracking-[-0.03em] text-[#4b2e2a]">
+                      <h4 className="mt-4 font-serif text-[clamp(2rem,6vw,3.3rem)] leading-none tracking-[-0.03em] text-[#4b2e2a]">
                         {menu.title}
                       </h4>
                     </div>
 
                     <div className="shrink-0 pt-1 text-right">
-                      <p className="font-sans text-[10px] uppercase tracking-[0.24em] text-[#9b8b68]">
+                      <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-[#9b8b68] sm:tracking-[0.24em]">
                         Precio
                       </p>
-                      <p className="mt-3 font-serif text-[clamp(1.55rem,2.1vw,2rem)] leading-none text-[#4b2e2a]">
+                      <p className="mt-3 font-serif text-[clamp(1.35rem,4vw,2rem)] leading-none text-[#4b2e2a]">
                         {menu.price}
                       </p>
                     </div>
                   </div>
 
-                  <div className="mt-9 border-t border-[#9b8b68]/22 pt-8">
-                    <p className="font-serif text-[clamp(1.2rem,1.45vw,1.48rem)] leading-[1.72] tracking-[-0.01em] text-[#4b2e2a]">
+                  <div className="mt-8 border-t border-[#9b8b68]/22 pt-7 md:mt-9 md:pt-8">
+                    <p className="font-serif text-[clamp(1.08rem,3.3vw,1.48rem)] leading-[1.65] tracking-[-0.01em] text-[#4b2e2a] md:leading-[1.72]">
                       {menu.description}
                     </p>
 
-                    <p className="mt-6 max-w-[530px] font-sans text-[0.98rem] leading-[1.9] tracking-[0.002em] text-[#4b2e2a]/72">
+                    <p className="mt-5 max-w-[530px] font-sans text-[0.96rem] leading-[1.8] tracking-[0.002em] text-[#4b2e2a]/72 md:mt-6 md:text-[0.98rem] md:leading-[1.9]">
                       {menu.summary}
                     </p>
                   </div>
 
-                  <div className="mt-10">
+                  <div className="mt-8 md:mt-10">
                     <button
                       onClick={() => openSelectedMenuModal(menu.key)}
-                      className="group/button relative overflow-hidden rounded-full bg-[#241712] px-7 py-3.5 font-sans text-sm uppercase tracking-[0.14em] text-white shadow-[0_14px_32px_rgba(36,23,18,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1a100c] hover:shadow-[0_20px_42px_rgba(36,23,18,0.18)]"
+                      className="group/button relative overflow-hidden rounded-full bg-[#241712] px-6 py-3.5 font-sans text-[11px] uppercase tracking-[0.14em] text-white shadow-[0_14px_32px_rgba(36,23,18,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1a100c] hover:shadow-[0_20px_42px_rgba(36,23,18,0.18)] sm:px-7 sm:text-sm"
                     >
                       <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/8 to-white/0 opacity-0 transition-opacity duration-300 group-hover/button:opacity-100" />
                       <span className="relative z-10">Ver menú</span>
@@ -743,15 +1031,15 @@ export default function Home() {
         className="relative overflow-hidden pb-6 pt-3 md:pb-8 md:pt-4"
         style={{ backgroundColor: SOFT_BEIGE }}
       >
-        <div className="mx-auto max-w-[1440px] px-6 md:px-12">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-6 md:px-12">
           <div
-            className={`group relative mx-auto overflow-hidden rounded-[28px] border border-[#b9a78d]/18 bg-[#d9cdbc]/28 shadow-[0_20px_60px_rgba(62,38,25,0.08)] transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] md:rounded-[34px] ${
+            className={`group relative mx-auto overflow-hidden rounded-[24px] border border-[#b9a78d]/18 bg-[#d9cdbc]/28 shadow-[0_20px_60px_rgba(62,38,25,0.08)] transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] md:rounded-[34px] ${
               isTransitionVisible
                 ? "translate-y-0 opacity-100"
                 : "translate-y-12 opacity-0"
             }`}
           >
-            <div className="relative h-[180px] sm:h-[220px] md:h-[260px] lg:h-[300px]">
+            <div className="relative h-[170px] sm:h-[220px] md:h-[260px] lg:h-[300px]">
               <Image
                 src="/recurso.jpeg"
                 alt="Transición visual entre carta y espacio"
@@ -776,7 +1064,7 @@ export default function Home() {
         className="px-0 pb-8 pt-8 md:pb-10 md:pt-10"
         style={{ backgroundColor: SOFT_BEIGE }}
       >
-        <div className="mx-auto max-w-[1440px] px-6 md:px-12">
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-6 md:px-12">
           <div
             className={`mx-auto max-w-[1140px] text-center transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
               isEspacioIntroVisible
@@ -784,15 +1072,15 @@ export default function Home() {
                 : "translate-y-10 opacity-0"
             }`}
           >
-            <p className="font-sans mb-6 text-sm uppercase tracking-[0.18em] text-[#9b8b68]">
+            <p className="font-sans mb-5 text-[11px] uppercase tracking-[0.16em] text-[#9b8b68] sm:mb-6 sm:text-sm sm:tracking-[0.18em]">
               EL ESPACIO
             </p>
 
             <div className="mx-auto max-w-[980px]">
-              <p className="font-serif text-[clamp(1.4rem,1.9vw,2.15rem)] leading-[1.78] tracking-[-0.012em] text-[#4b2e2a] md:text-[clamp(1.6rem,2.1vw,2.35rem)]">
+              <p className="font-serif text-[clamp(1.15rem,4.8vw,2.35rem)] leading-[1.75] tracking-[-0.012em] text-[#4b2e2a] md:text-[clamp(1.6rem,2.1vw,2.35rem)] md:leading-[1.78]">
                 Un espacio acogedor, cálido y cuidado, donde la calma, la
-                cercanía y la autenticidad acompañan cada momento alrededor de
-                la mesa. En Román 1924, el espacio nace de la misma esencia que
+                cercanía y la autenticidad acompañan cada momento alrededor de la
+                mesa. En Román 1924, el espacio nace de la misma esencia que
                 inspira su cocina: la memoria, el respeto por lo sencillo y una
                 forma honesta de compartir. Porque antes de ser restaurante, fue
                 casa; y esa sensación de hogar sigue presente en cada detalle.
@@ -802,16 +1090,16 @@ export default function Home() {
         </div>
 
         <div
-          className={`relative mt-16 overflow-hidden transition-all duration-[1500ms] delay-150 ease-[cubic-bezier(0.22,1,0.36,1)] md:mt-20 ${
+          className={`relative mt-12 overflow-hidden transition-all duration-[1500ms] delay-150 ease-[cubic-bezier(0.22,1,0.36,1)] md:mt-20 ${
             isEspacioIntroVisible
               ? "translate-y-0 opacity-100"
               : "translate-y-12 opacity-0"
           }`}
-          onMouseEnter={() => setIsEspacioPaused(true)}
-          onMouseLeave={() => setIsEspacioPaused(false)}
+          onMouseEnter={() => !isMobile && setIsEspacioPaused(true)}
+          onMouseLeave={() => !isMobile && setIsEspacioPaused(false)}
         >
           <div className="block md:hidden">
-            <div className="relative h-[500px] w-full overflow-hidden">
+            <div className="relative h-[58svh] min-h-[320px] max-h-[460px] w-full overflow-hidden">
               <div className="absolute inset-0 px-4">
                 <div className="relative h-full w-full overflow-hidden rounded-[24px] bg-[#ddd1bf] shadow-[0_22px_60px_rgba(44,28,20,0.12)]">
                   <Image
@@ -835,7 +1123,7 @@ export default function Home() {
           </div>
 
           <div className="hidden md:block">
-            <div className="relative mx-auto flex h-[650px] max-w-[1700px] items-stretch gap-5 px-6 xl:h-[720px]">
+            <div className="relative mx-auto flex h-[560px] max-w-[1700px] items-stretch gap-4 px-6 lg:h-[650px] xl:h-[720px]">
               <button
                 onClick={goPrevEspacio}
                 className="group relative w-[16%] overflow-hidden rounded-[24px] bg-[#ddd1bf] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:w-[17%]"
@@ -863,7 +1151,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/18 via-transparent to-black/5" />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/6 via-transparent to-transparent" />
 
-                <div className="absolute inset-x-0 top-0 flex w-full items-start justify-end p-6 xl:p-8">
+                <div className="absolute inset-x-0 top-0 flex w-full items-start justify-end p-5 xl:p-8">
                   <div className="rounded-full border border-white/16 bg-white/10 px-4 py-2 backdrop-blur-sm">
                     <p className="font-sans text-[10px] uppercase tracking-[0.24em] text-white/80">
                       {String(currentEspacio + 1).padStart(2, "0")} /{" "}
@@ -913,23 +1201,23 @@ export default function Home() {
 
           <button
             onClick={goPrevEspacio}
-            className="absolute left-4 top-1/2 z-40 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#ffffff26] text-[#4b2e2a] backdrop-blur-md transition-all duration-300 hover:bg-white md:left-8 md:h-12 md:w-12"
+            className="absolute left-2 top-1/2 z-40 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#ffffff26] text-[#4b2e2a] backdrop-blur-md transition-all duration-300 hover:bg-white sm:left-4 sm:h-11 sm:w-11 md:left-8 md:h-12 md:w-12"
             style={{ backgroundColor: "rgba(238,230,216,0.82)" }}
             aria-label="Imagen anterior"
           >
-            <span className="text-xl leading-none">‹</span>
+            <span className="text-lg leading-none sm:text-xl">‹</span>
           </button>
 
           <button
             onClick={goNextEspacio}
-            className="absolute right-4 top-1/2 z-40 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#ffffff26] text-[#4b2e2a] backdrop-blur-md transition-all duration-300 hover:bg-white md:right-8 md:h-12 md:w-12"
+            className="absolute right-2 top-1/2 z-40 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#ffffff26] text-[#4b2e2a] backdrop-blur-md transition-all duration-300 hover:bg-white sm:right-4 sm:h-11 sm:w-11 md:right-8 md:h-12 md:w-12"
             style={{ backgroundColor: "rgba(238,230,216,0.82)" }}
             aria-label="Imagen siguiente"
           >
-            <span className="text-xl leading-none">›</span>
+            <span className="text-lg leading-none sm:text-xl">›</span>
           </button>
 
-          <div className="mt-10 flex items-center justify-center gap-2.5">
+          <div className="mt-8 flex items-center justify-center gap-2.5 md:mt-10">
             {espacioImages.map((_, index) => (
               <button
                 key={index}
@@ -948,31 +1236,31 @@ export default function Home() {
 
       {openCarta && (
         <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-[4px]">
-          <div className="flex h-full w-full items-center justify-center px-4 py-4 md:px-8 md:py-8">
+          <div className="flex h-full w-full items-center justify-center px-2 py-2 sm:px-4 sm:py-4 md:px-8 md:py-8">
             <div className="relative w-full max-w-[1500px]">
               <button
                 onClick={() => setOpenCarta(false)}
-                className="absolute right-2 top-[-3rem] z-20 font-sans text-[11px] uppercase tracking-[0.22em] text-white/80 transition-opacity hover:opacity-60 md:right-0"
+                className="absolute right-1 top-[-2.4rem] z-20 font-sans text-[10px] uppercase tracking-[0.22em] text-white/80 transition-opacity hover:opacity-60 sm:right-2 md:right-0 md:top-[-3rem] md:text-[11px]"
               >
                 Cerrar
               </button>
 
-              <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-[#16110d] shadow-[0_30px_140px_rgba(0,0,0,0.55)]">
-                <div className="absolute left-0 top-0 z-20 flex w-full items-center justify-between px-6 py-5 md:px-8">
-                  <p className="font-sans text-[10px] uppercase tracking-[0.26em] text-white/65">
+              <div className="relative overflow-hidden rounded-[22px] border border-white/10 bg-[#16110d] shadow-[0_30px_140px_rgba(0,0,0,0.55)] md:rounded-[30px]">
+                <div className="absolute left-0 top-0 z-20 flex w-full items-center justify-between px-4 py-4 sm:px-5 md:px-8 md:py-5">
+                  <p className="font-sans text-[9px] uppercase tracking-[0.22em] text-white/65 md:text-[10px] md:tracking-[0.26em]">
                     Carta completa
                   </p>
 
-                  <p className="font-sans text-[10px] uppercase tracking-[0.26em] text-white/65">
+                  <p className="font-sans text-[9px] uppercase tracking-[0.22em] text-white/65 md:text-[10px] md:tracking-[0.26em]">
                     {String(currentCarta + 1).padStart(2, "0")} /{" "}
                     {String(cartaImages.length).padStart(2, "0")}
                   </p>
                 </div>
 
-                <div className="relative h-[84vh] min-h-[680px] w-full bg-[#120d0a]">
+                <div className="relative h-[72svh] min-h-0 w-full bg-[#120d0a] sm:h-[76svh] md:h-[84vh] md:min-h-[680px]">
                   <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/10" />
 
-                  <div className="absolute inset-0 flex items-center justify-center px-16 py-20">
+                  <div className="absolute inset-0 flex items-center justify-center px-4 py-12 sm:px-8 md:px-16 md:py-20">
                     <div
                       className={`relative h-full w-full max-w-[560px] transition-opacity duration-300 ${
                         isFadingCarta ? "opacity-0" : "opacity-100"
@@ -984,13 +1272,14 @@ export default function Home() {
                         fill
                         className="object-contain drop-shadow-[0_24px_60px_rgba(0,0,0,0.28)]"
                         priority
+                        sizes="(max-width: 768px) 90vw, 560px"
                       />
                     </div>
                   </div>
 
                   <button
                     onClick={goPrevCarta}
-                    className="absolute left-5 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/12 md:left-7"
+                    className="absolute left-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/12 sm:left-4 sm:h-11 sm:w-11 md:left-7 md:h-12 md:w-12"
                     aria-label="Imagen anterior"
                   >
                     <span className="text-xl leading-none">‹</span>
@@ -998,14 +1287,14 @@ export default function Home() {
 
                   <button
                     onClick={goNextCarta}
-                    className="absolute right-5 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/12 md:right-7"
+                    className="absolute right-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/12 sm:right-4 sm:h-11 sm:w-11 md:right-7 md:h-12 md:w-12"
                     aria-label="Imagen siguiente"
                   >
                     <span className="text-xl leading-none">›</span>
                   </button>
                 </div>
 
-                <div className="flex items-center justify-center gap-3 border-t border-white/8 px-6 py-5">
+                <div className="flex items-center justify-center gap-3 border-t border-white/8 px-4 py-4 md:px-6 md:py-5">
                   {cartaImages.map((_, index) => (
                     <button
                       key={index}
@@ -1034,36 +1323,36 @@ export default function Home() {
 
       {openMenuModal && (
         <div className="fixed inset-0 z-[110] bg-black/80 backdrop-blur-[4px]">
-          <div className="flex h-full w-full items-center justify-center px-4 py-4 md:px-8 md:py-8">
+          <div className="flex h-full w-full items-center justify-center px-2 py-2 sm:px-4 sm:py-4 md:px-8 md:py-8">
             <div className="relative w-full max-w-[1500px]">
               <button
                 onClick={() => setOpenMenuModal(false)}
-                className="absolute right-2 top-[-3rem] z-20 font-sans text-[11px] uppercase tracking-[0.22em] text-white/80 transition-opacity hover:opacity-60 md:right-0"
+                className="absolute right-1 top-[-2.4rem] z-20 font-sans text-[10px] uppercase tracking-[0.22em] text-white/80 transition-opacity hover:opacity-60 sm:right-2 md:right-0 md:top-[-3rem] md:text-[11px]"
               >
                 Cerrar
               </button>
 
-              <div className="relative overflow-hidden rounded-[30px] border border-white/10 bg-[#16110d] shadow-[0_30px_140px_rgba(0,0,0,0.55)]">
-                <div className="absolute left-0 top-0 z-20 flex w-full items-center justify-between px-6 py-5 md:px-8">
+              <div className="relative overflow-hidden rounded-[22px] border border-white/10 bg-[#16110d] shadow-[0_30px_140px_rgba(0,0,0,0.55)] md:rounded-[30px]">
+                <div className="absolute left-0 top-0 z-20 flex w-full items-center justify-between px-4 py-4 sm:px-5 md:px-8 md:py-5">
                   <div>
-                    <p className="font-sans text-[10px] uppercase tracking-[0.26em] text-white/65">
+                    <p className="font-sans text-[9px] uppercase tracking-[0.22em] text-white/65 md:text-[10px] md:tracking-[0.26em]">
                       Menú degustación
                     </p>
-                    <p className="mt-2 font-serif text-[1.15rem] text-white/92 md:text-[1.35rem]">
+                    <p className="mt-2 font-serif text-[1rem] text-white/92 md:text-[1.35rem]">
                       {activeMenuData.title}
                     </p>
                   </div>
 
-                  <p className="font-sans text-[10px] uppercase tracking-[0.26em] text-white/65">
+                  <p className="font-sans text-[9px] uppercase tracking-[0.22em] text-white/65 md:text-[10px] md:tracking-[0.26em]">
                     {String(currentMenuImage + 1).padStart(2, "0")} /{" "}
                     {String(activeMenuData.images.length).padStart(2, "0")}
                   </p>
                 </div>
 
-                <div className="relative h-[84vh] min-h-[680px] w-full bg-[#120d0a]">
+                <div className="relative h-[72svh] min-h-0 w-full bg-[#120d0a] sm:h-[76svh] md:h-[84vh] md:min-h-[680px]">
                   <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/10" />
 
-                  <div className="absolute inset-0 flex items-center justify-center px-16 py-20">
+                  <div className="absolute inset-0 flex items-center justify-center px-4 py-12 sm:px-8 md:px-16 md:py-20">
                     <div
                       className={`relative h-full w-full max-w-[560px] transition-opacity duration-300 ${
                         isFadingMenu ? "opacity-0" : "opacity-100"
@@ -1075,6 +1364,7 @@ export default function Home() {
                         fill
                         className="object-contain drop-shadow-[0_24px_60px_rgba(0,0,0,0.28)]"
                         priority
+                        sizes="(max-width: 768px) 90vw, 560px"
                       />
                     </div>
                   </div>
@@ -1083,7 +1373,7 @@ export default function Home() {
                     <>
                       <button
                         onClick={goPrevMenu}
-                        className="absolute left-5 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/12 md:left-7"
+                        className="absolute left-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/12 sm:left-4 sm:h-11 sm:w-11 md:left-7 md:h-12 md:w-12"
                         aria-label="Imagen anterior"
                       >
                         <span className="text-xl leading-none">‹</span>
@@ -1091,7 +1381,7 @@ export default function Home() {
 
                       <button
                         onClick={goNextMenu}
-                        className="absolute right-5 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/12 md:right-7"
+                        className="absolute right-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/12 sm:right-4 sm:h-11 sm:w-11 md:right-7 md:h-12 md:w-12"
                         aria-label="Imagen siguiente"
                       >
                         <span className="text-xl leading-none">›</span>
@@ -1100,7 +1390,7 @@ export default function Home() {
                   )}
                 </div>
 
-                <div className="flex items-center justify-center gap-3 border-t border-white/8 px-6 py-5">
+                <div className="flex items-center justify-center gap-3 border-t border-white/8 px-4 py-4 md:px-6 md:py-5">
                   {activeMenuData.images.map((_, index) => (
                     <button
                       key={index}
@@ -1151,30 +1441,30 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-[rgba(238,230,216,0.08)] via-[rgba(33,24,20,0.14)] to-[rgba(20,14,11,0.28)]" />
           <div className="absolute inset-0 bg-gradient-to-r from-[rgba(18,12,10,0.06)] via-transparent to-[rgba(18,12,10,0.06)]" />
 
-          <div className="absolute left-1/2 top-[28%] h-[280px] w-[280px] -translate-x-1/2 rounded-full bg-white/[0.03] blur-[115px]" />
-          <div className="absolute left-1/2 top-[30%] h-[180px] w-[620px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.04),transparent_72%)]" />
+          <div className="absolute left-1/2 top-[28%] h-[220px] w-[220px] -translate-x-1/2 rounded-full bg-white/[0.03] blur-[115px] md:h-[280px] md:w-[280px]" />
+          <div className="absolute left-1/2 top-[30%] h-[140px] w-[320px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.04),transparent_72%)] sm:w-[420px] md:h-[180px] md:w-[620px]" />
         </div>
 
-        <div className="relative z-30 mx-auto max-w-[1480px] px-6 pb-8 pt-14 md:px-12 md:pb-10 md:pt-18">
+        <div className="relative z-30 mx-auto max-w-[1480px] px-5 pb-8 pt-14 sm:px-6 md:px-12 md:pb-10">
           <div className="flex justify-center">
             <div className="footer-logo-wrap relative">
               <div className="absolute inset-0 scale-110 rounded-full bg-white/[0.025] blur-[60px]" />
-              <div className="relative mx-auto h-[145px] w-[290px] sm:h-[180px] sm:w-[410px] md:h-[230px] md:w-[560px] lg:h-[270px] lg:w-[700px]">
+              <div className="relative mx-auto h-[90px] w-[190px] sm:h-[140px] sm:w-[320px] md:h-[230px] md:w-[560px] lg:h-[270px] lg:w-[700px]">
                 <Image
                   src="/logonegativo-footer.png"
                   alt="Logo Roman 1924"
                   fill
                   className="object-contain opacity-[0.98] drop-shadow-[0_12px_34px_rgba(0,0,0,0.16)]"
-                  sizes="(max-width: 768px) 410px, 700px"
+                  sizes="(max-width: 640px) 190px, (max-width: 768px) 320px, 700px"
                 />
               </div>
             </div>
           </div>
 
-          <div className="mt-10 border-t border-white/12 pt-8 md:mt-12 md:pt-10">
-            <div className="mx-auto grid max-w-[1180px] gap-10 text-center md:grid-cols-3 md:items-start md:gap-8">
+          <div className="mt-8 border-t border-white/12 pt-8 md:mt-12 md:pt-10">
+            <div className="mx-auto grid max-w-[1180px] gap-8 text-center md:grid-cols-3 md:items-start md:gap-8">
               <div className="flex flex-col items-center">
-                <p className="font-sans mb-4 text-[10px] uppercase tracking-[0.32em] text-white/62">
+                <p className="font-sans mb-4 text-[10px] uppercase tracking-[0.28em] text-white/62 sm:tracking-[0.32em]">
                   Dirección
                 </p>
 
@@ -1182,12 +1472,12 @@ export default function Home() {
                   href="https://www.google.com/maps/search/?api=1&query=Calle+Santiago+22,+Calle+Maria+de+Molina+7,+Local+37,+Patio+del+Claustro+de+las+Francesas,+47001,+Valladolid"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-serif max-w-[420px] text-[clamp(1.02rem,1.32vw,1.4rem)] leading-[1.65] text-white/92 transition-all duration-300 hover:text-white hover:opacity-85"
+                  className="font-serif max-w-[420px] text-[clamp(1rem,3.8vw,1.4rem)] leading-[1.65] text-white/92 transition-all duration-300 hover:text-white hover:opacity-85"
                 >
                   Calle Santiago 22 · Calle María de Molina 7
                 </a>
 
-                <p className="mt-3 max-w-[420px] font-sans text-[0.95rem] leading-[1.8] text-white/62">
+                <p className="mt-3 max-w-[420px] font-sans text-[0.93rem] leading-[1.8] text-white/62">
                   Local 37 · Patio del Claustro de las Francesas
                   <br />
                   47001 Valladolid
@@ -1195,12 +1485,12 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col items-center">
-                <p className="font-sans mb-4 text-[10px] uppercase tracking-[0.32em] text-white/62">
+                <p className="font-sans mb-4 text-[10px] uppercase tracking-[0.28em] text-white/62 sm:tracking-[0.32em]">
                   Contacto
                 </p>
                 <a
                   href="tel:+34883888447"
-                  className="group inline-flex items-center gap-3 font-serif text-[clamp(1.12rem,1.45vw,1.55rem)] text-white/92 transition-all duration-300 hover:text-white"
+                  className="group inline-flex items-center gap-3 font-serif text-[clamp(1.05rem,4vw,1.55rem)] text-white/92 transition-all duration-300 hover:text-white"
                 >
                   <span className="h-px w-7 bg-white/28 transition-all duration-300 group-hover:w-10 group-hover:bg-white/58" />
                   883 888 447
@@ -1211,10 +1501,10 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col items-center">
-                <p className="font-sans mb-4 text-[10px] uppercase tracking-[0.32em] text-white/62">
+                <p className="font-sans mb-4 text-[10px] uppercase tracking-[0.28em] text-white/62 sm:tracking-[0.32em]">
                   Navegación
                 </p>
-                <nav className="flex flex-col items-center gap-3 font-sans text-[0.84rem] uppercase tracking-[0.22em] text-white/76">
+                <nav className="flex flex-col items-center gap-3 font-sans text-[0.8rem] uppercase tracking-[0.2em] text-white/76 sm:text-[0.84rem] sm:tracking-[0.22em]">
                   <a
                     href="#carta-cta"
                     className="transition-all duration-300 hover:translate-y-[-1px] hover:text-white"
@@ -1241,11 +1531,11 @@ export default function Home() {
           </div>
 
           <div className="mt-8 flex flex-col gap-3 border-t border-white/10 pt-5 md:mt-10 md:flex-row md:items-center md:justify-between">
-            <p className="font-sans text-[10px] uppercase tracking-[0.28em] text-white/34">
+            <p className="font-sans text-[10px] uppercase tracking-[0.24em] text-white/34 sm:tracking-[0.28em]">
               ROMÁN 1924
             </p>
 
-            <p className="font-sans text-[10px] uppercase tracking-[0.22em] text-white/34 md:text-right">
+            <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-white/34 md:text-right md:tracking-[0.22em]">
               Cocina con herencia
             </p>
           </div>
@@ -1294,8 +1584,20 @@ export default function Home() {
               transform: translateY(0) scale(1);
             }
           }
+
+          @media (max-width: 767px) {
+            .cinematic-zoom-hero {
+              animation: none;
+              transform: none;
+            }
+
+            .footer-bg {
+              animation: none;
+              transform: scale(1.01);
+            }
+          }
         `}</style>
       </footer>
     </main>
   );
-  }
+}

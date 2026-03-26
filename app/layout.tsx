@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 
@@ -16,6 +16,11 @@ const cormorant = Cormorant_Garamond({
 export const metadata: Metadata = {
   title: "ROMAN 1924",
   description: "Web de Roman 1924",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
