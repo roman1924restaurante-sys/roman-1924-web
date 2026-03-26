@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type TastingMenuKey = "memoria" | "lumbre";
 
@@ -38,14 +38,6 @@ export default function Home() {
   const [isEspacioIntroVisible, setIsEspacioIntroVisible] = useState(false);
   const [isTransitionVisible, setIsTransitionVisible] = useState(false);
   const [isMenusVisible, setIsMenusVisible] = useState(false);
-
-  const [originCartaProgress, setOriginCartaProgress] = useState(0);
-
-  const originCartaRef = useRef<HTMLElement | null>(null);
-  const espacioSectionRef = useRef<HTMLElement | null>(null);
-  const transitionSectionRef = useRef<HTMLElement | null>(null);
-  const menusSectionRef = useRef<HTMLElement | null>(null);
-  const scrollRafRef = useRef<number | null>(null);
 
   const cartaImages = useMemo(
     () => [
@@ -118,55 +110,6 @@ export default function Home() {
     }, 350);
 
     return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    const clamp = (value: number, min: number, max: number) =>
-      Math.min(Math.max(value, min), max);
-
-    const computeProgress = () => {
-      if (!originCartaRef.current) return;
-
-      if (window.innerWidth < 1024) {
-        setOriginCartaProgress(0);
-        return;
-      }
-
-      const rect = originCartaRef.current.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const totalScrollable = rect.height - viewportHeight;
-
-      if (totalScrollable <= 0) {
-        setOriginCartaProgress(0);
-        return;
-      }
-
-      const rawProgress = -rect.top / totalScrollable;
-      const progress = clamp(rawProgress, 0, 1);
-      setOriginCartaProgress(progress);
-    };
-
-    const onScrollOrResize = () => {
-      if (scrollRafRef.current !== null) return;
-
-      scrollRafRef.current = window.requestAnimationFrame(() => {
-        computeProgress();
-        scrollRafRef.current = null;
-      });
-    };
-
-    computeProgress();
-    window.addEventListener("scroll", onScrollOrResize, { passive: true });
-    window.addEventListener("resize", onScrollOrResize);
-
-    return () => {
-      window.removeEventListener("scroll", onScrollOrResize);
-      window.removeEventListener("resize", onScrollOrResize);
-
-      if (scrollRafRef.current !== null) {
-        window.cancelAnimationFrame(scrollRafRef.current);
-      }
-    };
   }, []);
 
   useEffect(() => {
@@ -252,9 +195,6 @@ export default function Home() {
   }, [espacioImages.length, isEspacioPaused, isMobile]);
 
   useEffect(() => {
-    const node = espacioSectionRef.current;
-    if (!node) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) setIsEspacioIntroVisible(true);
@@ -262,14 +202,13 @@ export default function Home() {
       { threshold: 0.18 }
     );
 
-    observer.observe(node);
+    const node = document.getElementById("espacio");
+    if (node) observer.observe(node);
+
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    const node = transitionSectionRef.current;
-    if (!node) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) setIsTransitionVisible(true);
@@ -277,14 +216,13 @@ export default function Home() {
       { threshold: 0.22 }
     );
 
-    observer.observe(node);
+    const node = document.getElementById("transition-visual");
+    if (node) observer.observe(node);
+
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    const node = menusSectionRef.current;
-    if (!node) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) setIsMenusVisible(true);
@@ -292,25 +230,11 @@ export default function Home() {
       { threshold: 0.18 }
     );
 
-    observer.observe(node);
+    const node = document.getElementById("menus");
+    if (node) observer.observe(node);
+
     return () => observer.disconnect();
   }, []);
-
-  const easeOutQuint = (t: number) => 1 - Math.pow(1 - t, 5);
-  const easeInOutSoft = (t: number) =>
-    t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-  const originEase = easeInOutSoft(originCartaProgress);
-  const cartaEase = easeOutQuint(originCartaProgress);
-
-  const originOpacity = 1 - originEase * 0.72;
-  const originScale = 1 - originEase * 0.018;
-  const originBlur = originEase * 3.5;
-  const originTranslateY = originEase * 10;
-
-  const cartaOpacity = 0.06 + cartaEase * 0.94;
-  const cartaTranslateY = (1 - cartaEase) * 92;
-  const cartaScale = 0.992 + cartaEase * 0.008;
 
   const goNextCarta = () => {
     setIsFadingCarta(true);
@@ -506,12 +430,7 @@ export default function Home() {
         style={{ backgroundColor: SOFT_BEIGE }}
       />
 
-      <section
-        id="origen"
-        ref={originCartaRef}
-        className="relative"
-        style={{ backgroundColor: SOFT_BEIGE }}
-      >
+      <section id="origen" className="relative" style={{ backgroundColor: SOFT_BEIGE }}>
         {isMobile ? (
           <section className="relative overflow-hidden">
             <div className="relative min-h-[72svh]">
@@ -521,7 +440,6 @@ export default function Home() {
                 fill
                 className="object-cover"
                 sizes="100vw"
-                priority
               />
 
               <div className="absolute inset-0 bg-black/34" />
@@ -567,7 +485,6 @@ export default function Home() {
                       width={900}
                       height={1200}
                       className="h-auto w-full object-contain drop-shadow-[0_26px_50px_rgba(59,36,24,0.12)]"
-                      priority
                     />
 
                     <div
@@ -704,7 +621,6 @@ export default function Home() {
                       width={900}
                       height={1200}
                       className="h-auto w-full object-contain drop-shadow-[0_30px_55px_rgba(59,36,24,0.12)]"
-                      priority
                     />
 
                     <div
@@ -776,122 +692,113 @@ export default function Home() {
             </div>
           </section>
         ) : (
-          <section className="relative md:h-[200vh] xl:h-[210vh]">
-            <div className="relative overflow-hidden md:sticky md:top-0 md:h-screen">
+          <>
+            <section className="relative min-h-[100svh] overflow-hidden bg-[#120d0a]">
+              <div className="absolute inset-0">
+                <Image
+                  src="/libreria-roman.png"
+                  alt="Librería interior de Roman 1924"
+                  fill
+                  className="object-cover"
+                  sizes="100vw"
+                />
+              </div>
+
+              <div className="absolute inset-0 bg-black/28" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/18 via-transparent to-black/14" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/8 via-black/12 to-black/18" />
+
               <div
-                className="absolute inset-0 will-change-transform"
+                className="absolute inset-x-0 bottom-0 h-[42%]"
                 style={{
-                  opacity: originOpacity,
-                  transform: `translate3d(0, ${originTranslateY}px, 0) scale(${originScale})`,
-                  filter: `blur(${originBlur}px)`,
+                  background:
+                    "linear-gradient(to bottom, rgba(238,230,216,0) 0%, rgba(238,230,216,0.12) 22%, rgba(238,230,216,0.34) 46%, rgba(238,230,216,0.7) 74%, rgba(238,230,216,0.95) 92%, rgba(238,230,216,1) 100%)",
                 }}
-              >
-                <div className="absolute inset-0">
-                  <Image
-                    src="/libreria-roman.png"
-                    alt="Librería interior de Roman 1924"
-                    fill
-                    className="object-cover"
-                    sizes="100vw"
-                  />
-                </div>
+              />
 
-                <div className="absolute inset-0 bg-black/28" />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/18 via-transparent to-black/14" />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/8 via-black/12 to-black/18" />
+              <div className="relative z-20 mx-auto flex min-h-[100svh] max-w-[1440px] items-end px-8 pb-28 pt-28 xl:px-12 xl:pb-32">
+                <div className="grid w-full max-w-[1360px] gap-10 lg:grid-cols-[1.18fr_0.82fr] lg:items-end lg:gap-16">
+                  <div className="max-w-[900px]">
+                    <p className="font-sans mb-6 text-[11px] uppercase tracking-[0.2em] text-[#d7c6a3] sm:text-sm sm:tracking-[0.22em]">
+                      EL ORIGEN
+                    </p>
 
-                <div
-                  className="absolute inset-x-0 bottom-0 h-[46%]"
-                  style={{
-                    background:
-                      "linear-gradient(to bottom, rgba(238,230,216,0) 0%, rgba(238,230,216,0.10) 20%, rgba(238,230,216,0.30) 45%, rgba(238,230,216,0.65) 72%, rgba(238,230,216,0.94) 92%, rgba(238,230,216,1) 100%)",
-                  }}
-                />
+                    <h2 className="font-serif text-[clamp(2.6rem,6vw,6.2rem)] leading-[0.98] tracking-[-0.03em] text-white">
+                      Memoria, territorio
+                      <br />
+                      y una mirada
+                      <br />
+                      contemporánea.
+                    </h2>
+                  </div>
 
-                <div
-                  className="absolute inset-x-0 bottom-0 h-[24%]"
-                  style={{
-                    background:
-                      "radial-gradient(ellipse at center bottom, rgba(238,230,216,0.08) 0%, rgba(238,230,216,0.35) 35%, rgba(238,230,216,0.82) 78%, rgba(238,230,216,1) 100%)",
-                  }}
-                />
-
-                <div className="relative z-20 mx-auto h-full max-w-[1440px] px-5 pb-16 pt-20 sm:px-6 md:px-12 md:pt-28">
-                  <div className="grid max-w-[1360px] gap-8 md:gap-10 lg:grid-cols-[1.18fr_0.82fr] lg:items-start lg:gap-16">
-                    <div className="max-w-[860px]">
-                      <p className="font-sans mb-6 text-[11px] uppercase tracking-[0.2em] text-[#d7c6a3] sm:text-sm sm:tracking-[0.22em]">
-                        EL ORIGEN
-                      </p>
-
-                      <h2 className="font-serif max-w-[900px] text-[clamp(2.2rem,8vw,6.5rem)] leading-[0.98] tracking-[-0.03em] text-white">
-                        Memoria, territorio
-                        <br />
-                        y una mirada
-                        <br />
-                        contemporánea.
-                      </h2>
-                    </div>
-
-                    <div className="max-w-[460px] pt-1 md:pt-3 lg:pt-24">
-                      <p className="font-sans text-[0.96rem] leading-[1.75] tracking-[0.002em] text-white/84 md:text-[clamp(0.98rem,1.08vw,1.08rem)] md:leading-[1.72]">
-                        ROMÁN 1924 nace del recuerdo de una forma de vivir y de
-                        comer marcada por la tierra, las estaciones y el respeto
-                        por el producto. Inspirado en la figura de Román, el
-                        restaurante lleva al presente una cocina honesta, precisa
-                        y profundamente vinculada al sabor.
-                      </p>
-                    </div>
+                  <div className="max-w-[470px] lg:pb-8">
+                    <p className="font-sans text-[clamp(0.98rem,1.03vw,1.08rem)] leading-[1.78] tracking-[0.002em] text-white/84">
+                      ROMÁN 1924 nace del recuerdo de una forma de vivir y de
+                      comer marcada por la tierra, las estaciones y el respeto
+                      por el producto. Inspirado en la figura de Román, el
+                      restaurante lleva al presente una cocina honesta, precisa y
+                      profundamente vinculada al sabor.
+                    </p>
                   </div>
                 </div>
               </div>
+            </section>
 
+            <section
+              className="relative overflow-hidden py-12 xl:py-16"
+              style={{ backgroundColor: SOFT_BEIGE }}
+            >
               <div
-                className="pointer-events-none relative z-30 flex h-full items-end will-change-transform"
+                className="mx-auto h-px max-w-[1280px]"
                 style={{
-                  opacity: cartaOpacity,
-                  transform: `translate3d(0, ${cartaTranslateY}px, 0) scale(${cartaScale})`,
+                  background:
+                    "linear-gradient(to right, transparent 0%, rgba(75,46,42,0.12) 18%, rgba(75,46,42,0.2) 50%, rgba(75,46,42,0.12) 82%, transparent 100%)",
                 }}
-              >
-                <div
-                  id="carta"
-                  className="pointer-events-auto w-full rounded-t-[52px] shadow-[0_-30px_90px_rgba(0,0,0,0.12)]"
-                  style={{ backgroundColor: SOFT_BEIGE }}
-                >
-                  <div className="mx-auto grid min-h-[72vh] max-w-[1400px] gap-10 px-8 pb-10 pt-20 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:gap-12 xl:min-h-[76vh]">
+              />
+            </section>
+
+            <section
+              id="carta"
+              className="relative pb-10 pt-2"
+              style={{ backgroundColor: SOFT_BEIGE }}
+            >
+              <div className="mx-auto max-w-[1440px] px-8 xl:px-12">
+                <div className="overflow-hidden rounded-[42px] border border-[#b9a78d]/18 bg-[rgba(255,255,255,0.3)] shadow-[0_24px_70px_rgba(62,38,25,0.08)]">
+                  <div className="mx-auto grid max-w-[1400px] gap-12 px-8 pb-12 pt-12 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:gap-12 xl:px-10 xl:pb-14 xl:pt-14">
                     <div className="flex justify-center lg:justify-start">
                       <div className="relative w-full max-w-[760px]">
-                        <div className="relative mx-auto w-full max-w-[580px] md:max-w-[640px] lg:max-w-[720px]">
+                        <div className="relative mx-auto w-full max-w-[580px] lg:max-w-[700px]">
                           <Image
                             src="/carta-sobre.png"
                             alt="Sobre de la carta de Roman 1924"
                             width={900}
                             height={1200}
                             className="h-auto w-full object-contain drop-shadow-[0_30px_55px_rgba(59,36,24,0.12)]"
-                            priority
                           />
 
                           <div
-                            className={`pointer-events-none absolute left-[38.2%] top-[28.8%] z-10 w-[31%] -translate-x-1/2 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] sm:w-[30%] ${
+                            className={`pointer-events-none absolute left-[38.2%] top-[28.8%] z-10 w-[31%] -translate-x-1/2 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
                               showCartaText
                                 ? "translate-x-0 opacity-100"
                                 : "-translate-x-4 opacity-0"
                             }`}
                           >
                             <div className="text-center">
-                              <div className="space-y-[0.5rem] md:space-y-[0.68rem]">
-                                <p className="font-serif text-[clamp(0.68rem,1.55vw,1.28rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
+                              <div className="space-y-[0.5rem] md:space-y-[0.65rem]">
+                                <p className="font-serif text-[clamp(0.7rem,1.28vw,1.18rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
                                   Habitas verdes braseadas
                                 </p>
-                                <p className="font-serif text-[clamp(0.68rem,1.55vw,1.28rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
+                                <p className="font-serif text-[clamp(0.7rem,1.28vw,1.18rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
                                   Lenteja con paloma torcaz
                                 </p>
-                                <p className="font-serif text-[clamp(0.68rem,1.55vw,1.28rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
+                                <p className="font-serif text-[clamp(0.7rem,1.28vw,1.18rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
                                   Mero Negro
                                 </p>
-                                <p className="font-serif text-[clamp(0.68rem,1.55vw,1.28rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
+                                <p className="font-serif text-[clamp(0.7rem,1.28vw,1.18rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
                                   Codorniz Escabechada
                                 </p>
-                                <p className="font-serif text-[clamp(0.68rem,1.55vw,1.28rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
+                                <p className="font-serif text-[clamp(0.7rem,1.28vw,1.18rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
                                   Lechazo Churro
                                 </p>
                               </div>
@@ -903,12 +810,12 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <div className="max-w-[560px] lg:pl-6 xl:max-w-[620px]">
+                    <div className="max-w-[560px] lg:pl-4 xl:max-w-[620px]">
                       <p className="font-sans mb-5 text-[11px] uppercase tracking-[0.18em] text-[#9b8b68] sm:text-sm sm:tracking-[0.2em]">
                         LA CARTA
                       </p>
 
-                      <h3 className="font-serif max-w-[9ch] text-[clamp(2.3rem,5.2vw,5.25rem)] leading-[0.98] tracking-[-0.035em] text-[#4b2e2a]">
+                      <h3 className="font-serif max-w-[9ch] text-[clamp(2.5rem,4.8vw,5rem)] leading-[0.98] tracking-[-0.035em] text-[#4b2e2a]">
                         Una selección que
                         <br />
                         cambia con la
@@ -943,22 +850,22 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </>
         )}
       </section>
 
       <section
-        ref={menusSectionRef}
+        id="menus"
         className="relative overflow-hidden pb-8 pt-0 md:pb-10 md:pt-2"
         style={{ backgroundColor: SOFT_BEIGE }}
       >
         <div className="mx-auto max-w-[1440px] px-5 sm:px-6 md:px-12">
           <div
-            className={`mx-auto max-w-[980px] text-center transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            className={`mx-auto max-w-[980px] text-center transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
               isMenusVisible
                 ? "translate-y-0 opacity-100"
-                : "translate-y-10 opacity-0"
+                : "translate-y-8 opacity-0"
             }`}
           >
             <p className="font-sans mb-5 text-[11px] uppercase tracking-[0.16em] text-[#9b8b68] sm:mb-6 sm:text-sm sm:tracking-[0.18em]">
@@ -979,10 +886,10 @@ export default function Home() {
           </div>
 
           <div
-            className={`mx-auto mt-10 grid max-w-[1280px] gap-5 transition-all duration-[1500ms] delay-150 ease-[cubic-bezier(0.22,1,0.36,1)] sm:mt-12 md:mt-14 md:gap-8 lg:grid-cols-2 ${
+            className={`mx-auto mt-10 grid max-w-[1280px] gap-5 transition-all duration-[1300ms] delay-100 ease-[cubic-bezier(0.22,1,0.36,1)] sm:mt-12 md:mt-14 md:gap-8 lg:grid-cols-2 ${
               isMenusVisible
                 ? "translate-y-0 opacity-100"
-                : "translate-y-12 opacity-0"
+                : "translate-y-10 opacity-0"
             }`}
           >
             {tastingMenus.map((menu) => (
@@ -1042,16 +949,16 @@ export default function Home() {
       </section>
 
       <section
-        ref={transitionSectionRef}
+        id="transition-visual"
         className="relative overflow-hidden pb-6 pt-3 md:pb-8 md:pt-4"
         style={{ backgroundColor: SOFT_BEIGE }}
       >
         <div className="mx-auto max-w-[1440px] px-5 sm:px-6 md:px-12">
           <div
-            className={`group relative mx-auto overflow-hidden rounded-[24px] border border-[#b9a78d]/18 bg-[#d9cdbc]/28 shadow-[0_20px_60px_rgba(62,38,25,0.08)] transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] md:rounded-[34px] ${
+            className={`group relative mx-auto overflow-hidden rounded-[24px] border border-[#b9a78d]/18 bg-[#d9cdbc]/28 shadow-[0_20px_60px_rgba(62,38,25,0.08)] transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] md:rounded-[34px] ${
               isTransitionVisible
                 ? "translate-y-0 opacity-100"
-                : "translate-y-12 opacity-0"
+                : "translate-y-10 opacity-0"
             }`}
           >
             <div className="relative h-[170px] sm:h-[220px] md:h-[260px] lg:h-[300px]">
@@ -1075,16 +982,15 @@ export default function Home() {
 
       <section
         id="espacio"
-        ref={espacioSectionRef}
         className="px-0 pb-8 pt-8 md:pb-10 md:pt-10"
         style={{ backgroundColor: SOFT_BEIGE }}
       >
         <div className="mx-auto max-w-[1440px] px-5 sm:px-6 md:px-12">
           <div
-            className={`mx-auto max-w-[1140px] text-center transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            className={`mx-auto max-w-[1140px] text-center transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
               isEspacioIntroVisible
                 ? "translate-y-0 opacity-100"
-                : "translate-y-10 opacity-0"
+                : "translate-y-8 opacity-0"
             }`}
           >
             <p className="font-sans mb-5 text-[11px] uppercase tracking-[0.16em] text-[#9b8b68] sm:mb-6 sm:text-sm sm:tracking-[0.18em]">
@@ -1105,10 +1011,10 @@ export default function Home() {
         </div>
 
         <div
-          className={`relative mt-12 overflow-hidden transition-all duration-[1500ms] delay-150 ease-[cubic-bezier(0.22,1,0.36,1)] md:mt-20 ${
+          className={`relative mt-12 overflow-hidden transition-all duration-[1300ms] delay-100 ease-[cubic-bezier(0.22,1,0.36,1)] md:mt-20 ${
             isEspacioIntroVisible
               ? "translate-y-0 opacity-100"
-              : "translate-y-12 opacity-0"
+              : "translate-y-10 opacity-0"
           }`}
           onMouseEnter={() => !isMobile && setIsEspacioPaused(true)}
           onMouseLeave={() => !isMobile && setIsEspacioPaused(false)}
@@ -1123,7 +1029,6 @@ export default function Home() {
                     fill
                     className="object-cover transition-transform duration-[1400ms] ease-out"
                     sizes="100vw"
-                    priority
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/16 via-transparent to-black/6" />
 
@@ -1161,7 +1066,6 @@ export default function Home() {
                   fill
                   className="object-cover transition-transform duration-[1800ms] ease-out group-hover:scale-[1.02]"
                   sizes="47vw"
-                  priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/18 via-transparent to-black/5" />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/6 via-transparent to-transparent" />
@@ -1286,7 +1190,6 @@ export default function Home() {
                         alt={`Carta ${currentCarta + 1}`}
                         fill
                         className="object-contain drop-shadow-[0_24px_60px_rgba(0,0,0,0.28)]"
-                        priority
                         sizes="(max-width: 768px) 90vw, 560px"
                       />
                     </div>
@@ -1378,7 +1281,6 @@ export default function Home() {
                         alt={`${activeMenuData.title} ${currentMenuImage + 1}`}
                         fill
                         className="object-contain drop-shadow-[0_24px_60px_rgba(0,0,0,0.28)]"
-                        priority
                         sizes="(max-width: 768px) 90vw, 560px"
                       />
                     </div>
