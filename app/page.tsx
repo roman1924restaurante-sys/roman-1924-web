@@ -782,27 +782,27 @@ export default function Home() {
                           />
 
                           <div
-                            className={`pointer-events-none absolute left-1/2 top-[35.5%] z-10 w-[32%] -translate-x-1/2 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                            className={`pointer-events-none absolute inset-x-0 top-[36.5%] z-10 flex justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
                               showCartaText
                                 ? "translate-x-0 opacity-100"
                                 : "-translate-x-4 opacity-0"
                             }`}
                           >
-                            <div className="mx-auto text-center">
-                              <div className="flex flex-col items-center space-y-[0.42rem]">
-                                <p className="w-full text-center font-serif text-[clamp(0.72rem,1.1vw,1.05rem)] leading-[1.34] tracking-[0.003em] text-[#7a5b4d]">
+                            <div className="w-[36%] text-center">
+                              <div className="flex flex-col items-center gap-[0.34rem]">
+                                <p className="w-full text-center font-serif text-[clamp(0.7rem,0.95vw,0.98rem)] leading-[1.32] tracking-[0.002em] text-[#7a5b4d]">
                                   Habitas verdes braseadas
                                 </p>
-                                <p className="w-full text-center font-serif text-[clamp(0.72rem,1.1vw,1.05rem)] leading-[1.34] tracking-[0.003em] text-[#7a5b4d]">
+                                <p className="w-full text-center font-serif text-[clamp(0.7rem,0.95vw,0.98rem)] leading-[1.32] tracking-[0.002em] text-[#7a5b4d]">
                                   Lenteja con paloma torcaz
                                 </p>
-                                <p className="w-full text-center font-serif text-[clamp(0.72rem,1.1vw,1.05rem)] leading-[1.34] tracking-[0.003em] text-[#7a5b4d]">
+                                <p className="w-full text-center font-serif text-[clamp(0.7rem,0.95vw,0.98rem)] leading-[1.32] tracking-[0.002em] text-[#7a5b4d]">
                                   Mero Negro
                                 </p>
-                                <p className="w-full text-center font-serif text-[clamp(0.72rem,1.1vw,1.05rem)] leading-[1.34] tracking-[0.003em] text-[#7a5b4d]">
+                                <p className="w-full text-center font-serif text-[clamp(0.7rem,0.95vw,0.98rem)] leading-[1.32] tracking-[0.002em] text-[#7a5b4d]">
                                   Codorniz Escabechada
                                 </p>
-                                <p className="w-full text-center font-serif text-[clamp(0.72rem,1.1vw,1.05rem)] leading-[1.34] tracking-[0.003em] text-[#7a5b4d]">
+                                <p className="w-full text-center font-serif text-[clamp(0.7rem,0.95vw,0.98rem)] leading-[1.32] tracking-[0.002em] text-[#7a5b4d]">
                                   Lechazo Churro
                                 </p>
                               </div>
