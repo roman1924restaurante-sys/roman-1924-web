@@ -45,6 +45,7 @@ export default function Home() {
   const espacioSectionRef = useRef<HTMLElement | null>(null);
   const transitionSectionRef = useRef<HTMLElement | null>(null);
   const menusSectionRef = useRef<HTMLElement | null>(null);
+  const scrollRafRef = useRef<number | null>(null);
 
   const cartaImages = useMemo(
     () => [
@@ -123,8 +124,9 @@ export default function Home() {
     const clamp = (value: number, min: number, max: number) =>
       Math.min(Math.max(value, min), max);
 
-    const handleScroll = () => {
+    const computeProgress = () => {
       if (!originCartaRef.current) return;
+
       if (window.innerWidth < 1024) {
         setOriginCartaProgress(0);
         return;
@@ -144,13 +146,26 @@ export default function Home() {
       setOriginCartaProgress(progress);
     };
 
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
+    const onScrollOrResize = () => {
+      if (scrollRafRef.current !== null) return;
+
+      scrollRafRef.current = window.requestAnimationFrame(() => {
+        computeProgress();
+        scrollRafRef.current = null;
+      });
+    };
+
+    computeProgress();
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onScrollOrResize);
+
+      if (scrollRafRef.current !== null) {
+        window.cancelAnimationFrame(scrollRafRef.current);
+      }
     };
   }, []);
 
@@ -288,14 +303,14 @@ export default function Home() {
   const originEase = easeInOutSoft(originCartaProgress);
   const cartaEase = easeOutQuint(originCartaProgress);
 
-  const originOpacity = 1 - originEase * 0.86;
-  const originScale = 1 - originEase * 0.028;
-  const originBlur = originEase * 6;
-  const originTranslateY = originEase * 18;
+  const originOpacity = 1 - originEase * 0.72;
+  const originScale = 1 - originEase * 0.018;
+  const originBlur = originEase * 3.5;
+  const originTranslateY = originEase * 10;
 
-  const cartaOpacity = 0.03 + cartaEase * 0.97;
-  const cartaTranslateY = (1 - cartaEase) * 150;
-  const cartaScale = 0.985 + cartaEase * 0.015;
+  const cartaOpacity = 0.06 + cartaEase * 0.94;
+  const cartaTranslateY = (1 - cartaEase) * 92;
+  const cartaScale = 0.992 + cartaEase * 0.008;
 
   const goNextCarta = () => {
     setIsFadingCarta(true);
@@ -761,13 +776,13 @@ export default function Home() {
             </div>
           </section>
         ) : (
-          <section className="relative md:h-[240vh]">
+          <section className="relative md:h-[200vh] xl:h-[210vh]">
             <div className="relative overflow-hidden md:sticky md:top-0 md:h-screen">
               <div
                 className="absolute inset-0 will-change-transform"
                 style={{
                   opacity: originOpacity,
-                  transform: `translateY(${originTranslateY}px) scale(${originScale})`,
+                  transform: `translate3d(0, ${originTranslateY}px, 0) scale(${originScale})`,
                   filter: `blur(${originBlur}px)`,
                 }}
               >
@@ -831,18 +846,18 @@ export default function Home() {
               </div>
 
               <div
-                className="relative z-30 flex items-end will-change-transform md:absolute md:inset-0"
+                className="pointer-events-none relative z-30 flex h-full items-end will-change-transform"
                 style={{
                   opacity: cartaOpacity,
-                  transform: `translateY(${cartaTranslateY}px) scale(${cartaScale})`,
+                  transform: `translate3d(0, ${cartaTranslateY}px, 0) scale(${cartaScale})`,
                 }}
               >
                 <div
                   id="carta"
-                  className="mt-0 w-full rounded-t-[52px] shadow-[0_-30px_90px_rgba(0,0,0,0.12)]"
+                  className="pointer-events-auto w-full rounded-t-[52px] shadow-[0_-30px_90px_rgba(0,0,0,0.12)]"
                   style={{ backgroundColor: SOFT_BEIGE }}
                 >
-                  <div className="mx-auto grid max-w-[1400px] gap-10 px-5 pb-8 pt-20 sm:px-6 md:px-8 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:gap-12">
+                  <div className="mx-auto grid min-h-[72vh] max-w-[1400px] gap-10 px-8 pb-10 pt-20 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:gap-12 xl:min-h-[76vh]">
                     <div className="flex justify-center lg:justify-start">
                       <div className="relative w-full max-w-[760px]">
                         <div className="relative mx-auto w-full max-w-[580px] md:max-w-[640px] lg:max-w-[720px]">
@@ -888,12 +903,12 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <div className="max-w-[640px] lg:pl-6">
+                    <div className="max-w-[560px] lg:pl-6 xl:max-w-[620px]">
                       <p className="font-sans mb-5 text-[11px] uppercase tracking-[0.18em] text-[#9b8b68] sm:text-sm sm:tracking-[0.2em]">
                         LA CARTA
                       </p>
 
-                      <h3 className="font-serif text-[clamp(2.3rem,6vw,5.8rem)] leading-[1.04] tracking-[-0.03em] text-[#4b2e2a]">
+                      <h3 className="font-serif max-w-[9ch] text-[clamp(2.3rem,5.2vw,5.25rem)] leading-[0.98] tracking-[-0.035em] text-[#4b2e2a]">
                         Una selección que
                         <br />
                         cambia con la
@@ -1545,15 +1560,18 @@ export default function Home() {
           .cinematic-zoom-hero {
             animation: heroZoom 11s ease-out forwards;
             transform-origin: center center;
+            will-change: transform;
           }
 
           .footer-bg {
             transform: scale(1.015);
             animation: footerFloat 18s ease-in-out infinite alternate;
+            will-change: transform;
           }
 
           .footer-logo-wrap {
             animation: footerReveal 1.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+            will-change: transform, opacity;
           }
 
           @keyframes heroZoom {
@@ -1594,6 +1612,14 @@ export default function Home() {
             .footer-bg {
               animation: none;
               transform: scale(1.01);
+            }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .cinematic-zoom-hero,
+            .footer-bg,
+            .footer-logo-wrap {
+              animation: none !important;
             }
           }
         `}</style>
