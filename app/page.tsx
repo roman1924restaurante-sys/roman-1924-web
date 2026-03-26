@@ -430,7 +430,11 @@ export default function Home() {
         style={{ backgroundColor: SOFT_BEIGE }}
       />
 
-      <section id="origen" className="relative" style={{ backgroundColor: SOFT_BEIGE }}>
+      <section
+        id="origen"
+        className="relative"
+        style={{ backgroundColor: SOFT_BEIGE }}
+      >
         {isMobile ? (
           <section className="relative overflow-hidden">
             <div className="relative min-h-[72svh]">
@@ -765,9 +769,9 @@ export default function Home() {
             >
               <div className="mx-auto max-w-[1440px] px-8 xl:px-12">
                 <div className="overflow-hidden rounded-[42px] border border-[#b9a78d]/18 bg-[rgba(255,255,255,0.3)] shadow-[0_24px_70px_rgba(62,38,25,0.08)]">
-                  <div className="mx-auto grid max-w-[1400px] gap-12 px-8 pb-12 pt-12 lg:grid-cols-[1.02fr_0.98fr] lg:items-center lg:gap-12 xl:px-10 xl:pb-14 xl:pt-14">
-                    <div className="flex justify-center lg:justify-start">
-                      <div className="relative w-full max-w-[760px]">
+                  <div className="mx-auto grid max-w-[1400px] gap-10 px-8 pb-12 pt-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-10 xl:px-10 xl:pb-14 xl:pt-14">
+                    <div className="flex justify-center lg:justify-center">
+                      <div className="relative w-full max-w-[720px]">
                         <div className="relative mx-auto w-full max-w-[580px] lg:max-w-[700px]">
                           <Image
                             src="/carta-sobre.png"
@@ -778,27 +782,27 @@ export default function Home() {
                           />
 
                           <div
-                            className={`pointer-events-none absolute left-[38.2%] top-[28.8%] z-10 w-[31%] -translate-x-1/2 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                            className={`pointer-events-none absolute left-1/2 top-[26.8%] z-10 w-[34%] -translate-x-1/2 transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
                               showCartaText
                                 ? "translate-x-0 opacity-100"
                                 : "-translate-x-4 opacity-0"
                             }`}
                           >
-                            <div className="text-center">
-                              <div className="space-y-[0.5rem] md:space-y-[0.65rem]">
-                                <p className="font-serif text-[clamp(0.7rem,1.28vw,1.18rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
+                            <div className="mx-auto text-center">
+                              <div className="flex flex-col items-center space-y-[0.42rem]">
+                                <p className="w-full text-center font-serif text-[clamp(0.72rem,1.1vw,1.05rem)] leading-[1.34] tracking-[0.003em] text-[#7a5b4d]">
                                   Habitas verdes braseadas
                                 </p>
-                                <p className="font-serif text-[clamp(0.7rem,1.28vw,1.18rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
+                                <p className="w-full text-center font-serif text-[clamp(0.72rem,1.1vw,1.05rem)] leading-[1.34] tracking-[0.003em] text-[#7a5b4d]">
                                   Lenteja con paloma torcaz
                                 </p>
-                                <p className="font-serif text-[clamp(0.7rem,1.28vw,1.18rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
+                                <p className="w-full text-center font-serif text-[clamp(0.72rem,1.1vw,1.05rem)] leading-[1.34] tracking-[0.003em] text-[#7a5b4d]">
                                   Mero Negro
                                 </p>
-                                <p className="font-serif text-[clamp(0.7rem,1.28vw,1.18rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
+                                <p className="w-full text-center font-serif text-[clamp(0.72rem,1.1vw,1.05rem)] leading-[1.34] tracking-[0.003em] text-[#7a5b4d]">
                                   Codorniz Escabechada
                                 </p>
-                                <p className="font-serif text-[clamp(0.7rem,1.28vw,1.18rem)] leading-[1.32] tracking-[0.004em] text-[#7a5b4d]">
+                                <p className="w-full text-center font-serif text-[clamp(0.72rem,1.1vw,1.05rem)] leading-[1.34] tracking-[0.003em] text-[#7a5b4d]">
                                   Lechazo Churro
                                 </p>
                               </div>
@@ -810,22 +814,22 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <div className="max-w-[560px] lg:pl-4 xl:max-w-[620px]">
+                    <div className="flex max-w-[620px] flex-col justify-center lg:pl-6">
                       <p className="font-sans mb-5 text-[11px] uppercase tracking-[0.18em] text-[#9b8b68] sm:text-sm sm:tracking-[0.2em]">
                         LA CARTA
                       </p>
 
-                      <h3 className="font-serif max-w-[9ch] text-[clamp(2.5rem,4.8vw,5rem)] leading-[0.98] tracking-[-0.035em] text-[#4b2e2a]">
-                        Una selección que
+                      <h3 className="font-serif max-w-[11ch] text-[clamp(2.4rem,4.2vw,4.7rem)] leading-[1.02] tracking-[-0.03em] text-[#4b2e2a]">
+                        Una selección
                         <br />
-                        cambia con la
+                        que cambia con
                         <br />
-                        estación.
+                        la estación.
                       </h3>
 
                       <div
                         id="carta-cta"
-                        className="mt-8 flex flex-wrap items-center gap-4 sm:mt-10"
+                        className="mt-10 flex flex-wrap items-center gap-4 xl:mt-12"
                       >
                         <button
                           onClick={openCartaModal}
