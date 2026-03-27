@@ -782,27 +782,27 @@ export default function Home() {
                           />
 
                           <div
-                            className={`pointer-events-none absolute inset-x-0 top-[33.5%] z-10 flex justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                            className={`pointer-events-none absolute inset-x-0 top-[31.8%] z-10 flex justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
                               showCartaText
                                 ? "translate-x-0 opacity-100"
                                 : "-translate-x-4 opacity-0"
                             }`}
                           >
                             <div className="w-[36%] text-center">
-                              <div className="flex flex-col items-center gap-[0.34rem]">
-                                <p className="w-full text-center font-serif text-[clamp(0.7rem,0.95vw,0.98rem)] leading-[1.32] tracking-[0.002em] text-[#7a5b4d]">
+                              <div className="flex flex-col items-center gap-[0.22rem]">
+                                <p className="w-full text-center font-serif text-[clamp(0.82rem,1.08vw,1.12rem)] leading-[1.28] tracking-[0.001em] text-[#7a5b4d]">
                                   Habitas verdes braseadas
                                 </p>
-                                <p className="w-full text-center font-serif text-[clamp(0.7rem,0.95vw,0.98rem)] leading-[1.32] tracking-[0.002em] text-[#7a5b4d]">
+                                <p className="w-full text-center font-serif text-[clamp(0.82rem,1.08vw,1.12rem)] leading-[1.28] tracking-[0.001em] text-[#7a5b4d]">
                                   Lenteja con paloma torcaz
                                 </p>
-                                <p className="w-full text-center font-serif text-[clamp(0.7rem,0.95vw,0.98rem)] leading-[1.32] tracking-[0.002em] text-[#7a5b4d]">
+                                <p className="w-full text-center font-serif text-[clamp(0.82rem,1.08vw,1.12rem)] leading-[1.28] tracking-[0.001em] text-[#7a5b4d]">
                                   Mero Negro
                                 </p>
-                                <p className="w-full text-center font-serif text-[clamp(0.7rem,0.95vw,0.98rem)] leading-[1.32] tracking-[0.002em] text-[#7a5b4d]">
+                                <p className="w-full text-center font-serif text-[clamp(0.82rem,1.08vw,1.12rem)] leading-[1.28] tracking-[0.001em] text-[#7a5b4d]">
                                   Codorniz Escabechada
                                 </p>
-                                <p className="w-full text-center font-serif text-[clamp(0.7rem,0.95vw,0.98rem)] leading-[1.32] tracking-[0.002em] text-[#7a5b4d]">
+                                <p className="w-full text-center font-serif text-[clamp(0.82rem,1.08vw,1.12rem)] leading-[1.28] tracking-[0.001em] text-[#7a5b4d]">
                                   Lechazo Churro
                                 </p>
                               </div>
@@ -1390,15 +1390,15 @@ export default function Home() {
                 </p>
 
                 <a
-  href="https://www.google.com/maps/search/?api=1&query=Calle+Santiago+22,+Calle+Maria+de+Molina+7,+Local+37,+Patio+del+Claustro+de+las+Francesas,+47001,+Valladolid"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="font-serif max-w-[420px] text-center text-[clamp(1rem,3.8vw,1.4rem)] leading-[1.65] text-white/92 transition-all duration-300 hover:text-white hover:opacity-85"
->
-  Calle Santiago 22 · Calle María de Molina
-  <br />
-  7
-</a>
+                  href="https://www.google.com/maps/search/?api=1&query=Calle+Santiago+22,+Calle+Maria+de+Molina+7,+Local+37,+Patio+del+Claustro+de+las+Francesas,+47001,+Valladolid"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-serif max-w-[420px] text-center text-[clamp(1rem,3.8vw,1.4rem)] leading-[1.65] text-white/92 transition-all duration-300 hover:text-white hover:opacity-85"
+                >
+                  Calle Santiago 22 · Calle María de Molina
+                  <br />
+                  7
+                </a>
 
                 <p className="mt-3 max-w-[420px] font-sans text-[0.93rem] leading-[1.8] text-white/62">
                   Local 37 · Patio del Claustro de las Francesas
