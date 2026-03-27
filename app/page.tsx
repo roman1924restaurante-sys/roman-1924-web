@@ -492,19 +492,19 @@ export default function Home() {
                   >
                     <div className="w-[25.5%] min-w-[68px] text-center">
                       <div className="flex flex-col items-center gap-[0.12rem]">
-                        <p className="w-full text-center font-serif text-[clamp(0.42rem,1.42vw,0.56rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
+                        <p className="w-full text-center font-serif text-[clamp(0.38rem,1.28vw,0.52rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
                           Habitas verdes braseadas
                         </p>
-                        <p className="w-full text-center font-serif text-[clamp(0.42rem,1.42vw,0.56rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
+                        <p className="w-full text-center font-serif text-[clamp(0.38rem,1.28vw,0.52rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
                           Lenteja con paloma torcaz
                         </p>
-                        <p className="w-full text-center font-serif text-[clamp(0.42rem,1.42vw,0.56rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
+                        <p className="w-full text-center font-serif text-[clamp(0.38rem,1.28vw,0.52rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
                           Mero Negro
                         </p>
-                        <p className="w-full text-center font-serif text-[clamp(0.42rem,1.42vw,0.56rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
+                        <p className="w-full text-center font-serif text-[clamp(0.38rem,1.28vw,0.52rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
                           Codorniz Escabechada
                         </p>
-                        <p className="w-full text-center font-serif text-[clamp(0.42rem,1.42vw,0.56rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
+                        <p className="w-full text-center font-serif text-[clamp(0.38rem,1.28vw,0.52rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
                           Lechazo Churro
                         </p>
                       </div>
