@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #EEE6D8;
+  --foreground: #4b2e2a;
 }
 
 @theme inline {
@@ -10,14 +10,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 *,
@@ -36,8 +28,12 @@ body {
   min-width: 320px;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  line-height: 1.5;
   overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 img,
@@ -61,7 +57,13 @@ button {
 }
 
 a {
+  color: inherit;
   text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(75, 46, 42, 0.45);
+  outline-offset: 3px;
 }
 
 @keyframes fadeUp {
@@ -84,38 +86,16 @@ a {
   animation-delay: 0.18s;
 }
 
-@keyframes cinematicZoomHero {
-  from {
-    transform: scale(1.02);
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
-  to {
-    transform: scale(1.07);
-  }
-}
 
-@keyframes cinematicZoomOrigin {
-  from {
-    transform: scale(1.03);
-  }
-  to {
-    transform: scale(1.08);
-  }
-}
-
-.cinematic-zoom-hero {
-  animation: cinematicZoomHero 18s ease-out forwards;
-  will-change: transform;
-}
-
-.cinematic-zoom-origin {
-  animation: cinematicZoomOrigin 22s ease-out forwards;
-  will-change: transform;
-}
-
-@media (max-width: 767px) {
-  .cinematic-zoom-hero,
-  .cinematic-zoom-origin {
-    animation: none;
-    transform: none;
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
   }
 }

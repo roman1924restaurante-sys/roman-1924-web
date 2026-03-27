@@ -5,17 +5,19 @@ import "./globals.css";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
+  display: "swap",
 });
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   variable: "--font-serif",
   weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "ROMAN 1924",
-  description: "Web de Roman 1924",
+  title: "ROMÁN 1924",
+  description: "Web de Román 1924",
   icons: {
     icon: "/icon.png",
   },
