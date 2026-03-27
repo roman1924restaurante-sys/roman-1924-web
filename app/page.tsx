@@ -782,7 +782,7 @@ export default function Home() {
                           />
 
                           <div
-                            className={`pointer-events-none absolute inset-x-0 top-[36.5%] z-10 flex justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                            className={`pointer-events-none absolute inset-x-0 top-[33.5%] z-10 flex justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
                               showCartaText
                                 ? "translate-x-0 opacity-100"
                                 : "-translate-x-4 opacity-0"
@@ -1390,13 +1390,15 @@ export default function Home() {
                 </p>
 
                 <a
-                  href="https://www.google.com/maps/search/?api=1&query=Calle+Santiago+22,+Calle+Maria+de+Molina+7,+Local+37,+Patio+del+Claustro+de+las+Francesas,+47001,+Valladolid"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-serif max-w-[420px] text-[clamp(1rem,3.8vw,1.4rem)] leading-[1.65] text-white/92 transition-all duration-300 hover:text-white hover:opacity-85"
-                >
-                  Calle Santiago 22 · Calle María de Molina 7
-                </a>
+  href="https://www.google.com/maps/search/?api=1&query=Calle+Santiago+22,+Calle+Maria+de+Molina+7,+Local+37,+Patio+del+Claustro+de+las+Francesas,+47001,+Valladolid"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="font-serif max-w-[420px] text-center text-[clamp(1rem,3.8vw,1.4rem)] leading-[1.65] text-white/92 transition-all duration-300 hover:text-white hover:opacity-85"
+>
+  Calle Santiago 22 · Calle María de Molina
+  <br />
+  7
+</a>
 
                 <p className="mt-3 max-w-[420px] font-sans text-[0.93rem] leading-[1.8] text-white/62">
                   Local 37 · Patio del Claustro de las Francesas
