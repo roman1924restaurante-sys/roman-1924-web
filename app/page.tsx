@@ -1393,11 +1393,9 @@ export default function Home() {
                   href="https://www.google.com/maps/search/?api=1&query=Calle+Santiago+22,+Calle+Maria+de+Molina+7,+Local+37,+Patio+del+Claustro+de+las+Francesas,+47001,+Valladolid"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-serif max-w-[420px] text-center text-[clamp(1rem,3.8vw,1.4rem)] leading-[1.65] text-white/92 transition-all duration-300 hover:text-white hover:opacity-85"
+                  className="font-serif max-w-[520px] whitespace-nowrap text-center text-[clamp(1rem,3.8vw,1.4rem)] leading-[1.65] text-white/92 transition-all duration-300 hover:text-white hover:opacity-85"
                 >
-                  Calle Santiago 22 · Calle María de Molina
-                  <br />
-                  7
+                  Calle Santiago 22 · Calle María de Molina 7
                 </a>
 
                 <p className="mt-3 max-w-[420px] font-sans text-[0.93rem] leading-[1.8] text-white/62">
