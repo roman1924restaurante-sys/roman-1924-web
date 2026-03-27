@@ -346,7 +346,8 @@ export default function Home() {
                 href={RESERVATION_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-sans inline-flex items-center justify-center rounded-full border border-white/20 bg-white/8 px-4 py-2 text-[11px] uppercase tracking-[0.12em] text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/16"
+                className="font-sans inline-flex items-center justify-center rounded-full border border-white/20 bg-white/8 px-4 py-2 text-[11px] uppercase tracking-[0.12em] !text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/16"
+                style={{ color: "#FFFFFF" }}
               >
                 Reservar
               </a>
@@ -398,7 +399,8 @@ export default function Home() {
                 href={RESERVATION_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-sans inline-flex items-center justify-center rounded-full bg-[#241712] px-6 py-3.5 text-[11px] uppercase tracking-[0.14em] text-[#FFFFFF] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1a100c] sm:px-7 sm:text-sm"
+                className="font-sans inline-flex items-center justify-center rounded-full bg-[#241712] px-6 py-3.5 text-[11px] uppercase tracking-[0.14em] !text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1a100c] sm:px-7 sm:text-sm"
+                style={{ color: "#FFFFFF" }}
               >
                 Reservar
               </a>
@@ -471,38 +473,38 @@ export default function Home() {
             />
             <div className="relative z-10 mx-auto max-w-[1200px]">
               <div className="flex flex-col items-center gap-8">
-                <div className="relative w-full max-w-[300px]">
+                <div className="relative w-full max-w-[268px]">
                   <Image
                     src="/titulo-carta.webp"
                     alt="Sobre de la carta de Roman 1924"
                     width={900}
                     height={1200}
-                    className="h-auto w-full object-contain drop-shadow-[0_24px_44px_rgba(59,36,24,0.11)]"
-                    sizes="300px"
+                    className="h-auto w-full object-contain drop-shadow-[0_20px_36px_rgba(59,36,24,0.1)]"
+                    sizes="268px"
                   />
 
                   <div
-                    className={`pointer-events-none absolute inset-x-0 top-[24.8%] z-10 flex justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                    className={`pointer-events-none absolute inset-x-0 top-[24.9%] z-10 flex justify-center transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
                       showCartaText
                         ? "translate-x-0 opacity-100"
                         : "-translate-x-4 opacity-0"
                     }`}
                   >
-                    <div className="w-[31%] min-w-[92px] text-center">
-                      <div className="flex flex-col items-center gap-[0.22rem]">
-                        <p className="w-full text-center font-serif text-[clamp(0.52rem,1.75vw,0.74rem)] leading-[1.22] text-[#7a5b4d]">
+                    <div className="w-[25.5%] min-w-[68px] text-center">
+                      <div className="flex flex-col items-center gap-[0.12rem]">
+                        <p className="w-full text-center font-serif text-[clamp(0.42rem,1.42vw,0.56rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
                           Habitas verdes braseadas
                         </p>
-                        <p className="w-full text-center font-serif text-[clamp(0.52rem,1.75vw,0.74rem)] leading-[1.22] text-[#7a5b4d]">
+                        <p className="w-full text-center font-serif text-[clamp(0.42rem,1.42vw,0.56rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
                           Lenteja con paloma torcaz
                         </p>
-                        <p className="w-full text-center font-serif text-[clamp(0.52rem,1.75vw,0.74rem)] leading-[1.22] text-[#7a5b4d]">
+                        <p className="w-full text-center font-serif text-[clamp(0.42rem,1.42vw,0.56rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
                           Mero Negro
                         </p>
-                        <p className="w-full text-center font-serif text-[clamp(0.52rem,1.75vw,0.74rem)] leading-[1.22] text-[#7a5b4d]">
+                        <p className="w-full text-center font-serif text-[clamp(0.42rem,1.42vw,0.56rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
                           Codorniz Escabechada
                         </p>
-                        <p className="w-full text-center font-serif text-[clamp(0.52rem,1.75vw,0.74rem)] leading-[1.22] text-[#7a5b4d]">
+                        <p className="w-full text-center font-serif text-[clamp(0.42rem,1.42vw,0.56rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
                           Lechazo Churro
                         </p>
                       </div>
