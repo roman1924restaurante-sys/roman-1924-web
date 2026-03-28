@@ -20,6 +20,9 @@ const SOFT_BEIGE = "#EEE6D8";
 const RESERVATION_URL =
   "https://www.covermanager.com/reservation/module_restaurant/restaurante-roman-1924/spanish";
 
+const EMAIL_ADDRESS = "roman1924@roman1924.com";
+const INSTAGRAM_URL = "https://instagram.com/roman1924_rest";
+
 const CARTA_IMAGES = [
   "/carta-precios-01.webp",
   "/carta-precios-02.webp",
@@ -59,6 +62,43 @@ const TASTING_MENUS: TastingMenu[] = [
     images: ["/menu-lumbre-01.webp", "/menu-lumbre-02.webp"],
   },
 ];
+
+function MailIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+    >
+      <rect x="3" y="5.5" width="18" height="13" rx="1.8" ry="1.8" />
+      <path d="M4.5 7l7.5 6 7.5-6" />
+    </svg>
+  );
+}
+
+function InstagramIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+    >
+      <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" ry="4.5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.4" cy="6.6" r="0.9" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
 
 function getVisibleEspacioImages(currentEspacio: number) {
   const prev =
@@ -325,9 +365,15 @@ export default function Home() {
           />
         </div>
 
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/26 via-transparent to-black/12" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/12 via-transparent to-black/16" />
+        <div aria-hidden="true" className="absolute inset-0 bg-black/30" />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-r from-black/26 via-transparent to-black/12"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-b from-black/12 via-transparent to-black/16"
+        />
 
         <header className="absolute left-0 top-0 z-30 w-full">
           <div className="mx-auto flex max-w-[1440px] items-center justify-between px-5 py-5 sm:px-6 md:px-12 md:py-7">
@@ -361,7 +407,7 @@ export default function Home() {
                 Concepto
               </a>
               <a
-                href="#carta-cta"
+                href="#carta-anchor"
                 className="transition-opacity duration-300 hover:opacity-70"
               >
                 Carta
@@ -427,6 +473,11 @@ export default function Home() {
         className="relative"
         style={{ backgroundColor: SOFT_BEIGE }}
       >
+        <div
+          id="carta-anchor"
+          className="pointer-events-none absolute left-0 top-[58%] h-px w-px opacity-0 scroll-mt-24 md:scroll-mt-28"
+        />
+
         <section className="relative overflow-hidden md:hidden">
           <div className="relative min-h-[72svh]">
             <Image
@@ -437,9 +488,15 @@ export default function Home() {
               sizes="100vw"
             />
 
-            <div className="absolute inset-0 bg-black/34" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/12 via-black/12 to-black/40" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/16 via-transparent to-black/10" />
+            <div aria-hidden="true" className="absolute inset-0 bg-black/34" />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-b from-black/12 via-black/12 to-black/40"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-r from-black/16 via-transparent to-black/10"
+            />
 
             <div className="relative z-10 mx-auto flex min-h-[72svh] max-w-[1440px] items-end px-5 pb-10 pt-24">
               <div className="max-w-[720px]">
@@ -468,6 +525,7 @@ export default function Home() {
 
           <div className="relative -mt-6 rounded-t-[28px] px-5 pb-10 pt-8 shadow-[0_-18px_50px_rgba(0,0,0,0.08)]">
             <div
+              aria-hidden="true"
               className="absolute inset-0 rounded-t-[28px]"
               style={{ backgroundColor: SOFT_BEIGE }}
             />
@@ -526,14 +584,18 @@ export default function Home() {
                   </h3>
 
                   <div
-                    id="carta-cta"
+                    id="carta-cta-mobile"
                     className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center"
                   >
                     <button
+                      type="button"
                       onClick={openCartaModal}
                       className="group relative overflow-hidden rounded-full bg-[#241712] px-7 py-3.5 font-sans text-[11px] uppercase tracking-[0.14em] text-white shadow-[0_14px_32px_rgba(36,23,18,0.16)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1a100c]"
                     >
-                      <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/8 to-white/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/8 to-white/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                      />
                       <span className="relative z-10">Ver carta completa</span>
                     </button>
 
@@ -562,11 +624,18 @@ export default function Home() {
               sizes="100vw"
             />
 
-            <div className="absolute inset-0 bg-black/30" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/14" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 to-black/24" />
+            <div aria-hidden="true" className="absolute inset-0 bg-black/30" />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/14"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 to-black/24"
+            />
 
             <div
+              aria-hidden="true"
               className="absolute inset-x-0 bottom-0 h-[42%]"
               style={{
                 background:
@@ -604,7 +673,7 @@ export default function Home() {
           </div>
 
           <div
-            id="carta"
+            id="carta-tablet"
             className="relative -mt-8 rounded-t-[40px] shadow-[0_-24px_70px_rgba(0,0,0,0.10)]"
             style={{ backgroundColor: SOFT_BEIGE }}
           >
@@ -668,10 +737,14 @@ export default function Home() {
                   className="mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start"
                 >
                   <button
+                    type="button"
                     onClick={openCartaModal}
                     className="group relative overflow-hidden rounded-full bg-[#241712] px-7 py-3.5 font-sans text-[11px] uppercase tracking-[0.14em] text-white shadow-[0_14px_32px_rgba(36,23,18,0.16)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1a100c]"
                   >
-                    <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/8 to-white/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    <span
+                      aria-hidden="true"
+                      className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/8 to-white/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    />
                     <span className="relative z-10">Ver carta completa</span>
                   </button>
 
@@ -700,11 +773,18 @@ export default function Home() {
             />
           </div>
 
-          <div className="absolute inset-0 bg-black/28" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/18 via-transparent to-black/14" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/8 via-black/12 to-black/18" />
+          <div aria-hidden="true" className="absolute inset-0 bg-black/28" />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-r from-black/18 via-transparent to-black/14"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-b from-black/8 via-black/12 to-black/18"
+          />
 
           <div
+            aria-hidden="true"
             className="absolute inset-x-0 bottom-0 h-[42%]"
             style={{
               background:
@@ -755,7 +835,7 @@ export default function Home() {
         </section>
 
         <section
-          id="carta"
+          id="carta-desktop"
           className="relative hidden pb-10 pt-2 lg:block"
           style={{ backgroundColor: SOFT_BEIGE }}
         >
@@ -802,7 +882,10 @@ export default function Home() {
                         </div>
                       </div>
 
-                      <div className="pointer-events-none absolute inset-0 rounded-[28px] bg-gradient-to-br from-white/18 via-transparent to-transparent opacity-70" />
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0 rounded-[28px] bg-gradient-to-br from-white/18 via-transparent to-transparent opacity-70"
+                      />
                     </div>
                   </div>
                 </div>
@@ -821,14 +904,18 @@ export default function Home() {
                   </h3>
 
                   <div
-                    id="carta-cta"
+                    id="carta-cta-desktop"
                     className="mt-10 flex flex-wrap items-center gap-4 xl:mt-12"
                   >
                     <button
+                      type="button"
                       onClick={openCartaModal}
                       className="group relative overflow-hidden rounded-full bg-[#241712] px-7 py-3.5 font-sans text-[11px] uppercase tracking-[0.14em] text-white shadow-[0_14px_32px_rgba(36,23,18,0.16)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1a100c] hover:shadow-[0_20px_42px_rgba(36,23,18,0.22)] sm:px-8 sm:py-4 sm:text-sm"
                     >
-                      <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/8 to-white/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/8 to-white/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                      />
                       <span className="relative z-10">Ver carta completa</span>
                     </button>
 
@@ -890,8 +977,14 @@ export default function Home() {
                 key={menu.key}
                 className="group relative overflow-hidden rounded-[20px] border border-[#b9a78d]/18 bg-[rgba(255,255,255,0.34)] shadow-[0_20px_60px_rgba(62,38,25,0.05)] backdrop-blur-[2px] sm:rounded-[24px] md:rounded-[30px]"
               >
-                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#9b8b68]/45 to-transparent" />
-                <div className="absolute left-0 top-0 h-full w-full bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.26),transparent_56%)] opacity-70" />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#9b8b68]/45 to-transparent"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute left-0 top-0 h-full w-full bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.26),transparent_56%)] opacity-70"
+                />
 
                 <div className="relative flex h-full flex-col px-5 pb-6 pt-6 sm:px-6 md:px-9 md:pb-9 md:pt-9">
                   <div className="flex items-start justify-between gap-5 sm:gap-6">
@@ -927,10 +1020,14 @@ export default function Home() {
 
                   <div className="mt-8 md:mt-10">
                     <button
+                      type="button"
                       onClick={() => openSelectedMenuModal(menu.key)}
                       className="group/button relative overflow-hidden rounded-full bg-[#241712] px-6 py-3.5 font-sans text-[11px] uppercase tracking-[0.14em] text-white shadow-[0_14px_32px_rgba(36,23,18,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#1a100c] hover:shadow-[0_20px_42px_rgba(36,23,18,0.18)] sm:px-7 sm:text-sm"
                     >
-                      <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/8 to-white/0 opacity-0 transition-opacity duration-300 group-hover/button:opacity-100" />
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/8 to-white/0 opacity-0 transition-opacity duration-300 group-hover/button:opacity-100"
+                      />
                       <span className="relative z-10">Ver menú</span>
                     </button>
                   </div>
@@ -963,11 +1060,23 @@ export default function Home() {
                 sizes="100vw"
               />
 
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(238,230,216,0.14),transparent_22%,transparent_78%,rgba(238,230,216,0.14))]" />
-              <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(238,230,216,0.28),rgba(238,230,216,0.04)_24%,rgba(18,12,10,0.06)_76%,rgba(18,12,10,0.12))]" />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-[linear-gradient(to_right,rgba(238,230,216,0.14),transparent_22%,transparent_78%,rgba(238,230,216,0.14))]"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(238,230,216,0.28),rgba(238,230,216,0.04)_24%,rgba(18,12,10,0.06)_76%,rgba(18,12,10,0.12))]"
+              />
 
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/55 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#6c4c3f]/20 to-transparent" />
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/55 to-transparent"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#6c4c3f]/20 to-transparent"
+              />
             </div>
           </div>
         </div>
@@ -1023,7 +1132,10 @@ export default function Home() {
                     className="object-cover transition-transform duration-[1400ms] ease-out"
                     sizes="100vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/16 via-transparent to-black/6" />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-gradient-to-t from-black/16 via-transparent to-black/6"
+                  />
 
                   <div className="absolute bottom-4 left-4 z-10">
                     <p className="pointer-events-none font-sans text-[8px] uppercase tracking-[0.24em] text-white/36 drop-shadow-[0_1px_2px_rgba(0,0,0,0.22)]">
@@ -1038,6 +1150,7 @@ export default function Home() {
           <div className="hidden md:block">
             <div className="relative mx-auto flex h-[560px] max-w-[1700px] items-stretch gap-4 px-6 lg:h-[650px] xl:h-[720px]">
               <button
+                type="button"
                 onClick={goPrevEspacio}
                 className="group relative w-[16%] overflow-hidden rounded-[24px] bg-[#ddd1bf] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:w-[17%]"
                 aria-label="Ver imagen anterior"
@@ -1049,7 +1162,10 @@ export default function Home() {
                   className="object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.025]"
                   sizes="16vw"
                 />
-                <div className="absolute inset-0 bg-black/20 transition-colors duration-500 group-hover:bg-black/8" />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-black/20 transition-colors duration-500 group-hover:bg-black/8"
+                />
               </button>
 
               <div className="group relative w-[47%] overflow-hidden rounded-[30px] bg-[#ddd1bf] shadow-[0_28px_80px_rgba(44,28,20,0.15)]">
@@ -1060,8 +1176,14 @@ export default function Home() {
                   className="object-cover transition-transform duration-[1800ms] ease-out group-hover:scale-[1.02]"
                   sizes="47vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/18 via-transparent to-black/5" />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/6 via-transparent to-transparent" />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-t from-black/18 via-transparent to-black/5"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-r from-black/6 via-transparent to-transparent"
+                />
 
                 <div className="absolute inset-x-0 top-0 flex w-full items-start justify-end p-5 xl:p-8">
                   <div className="rounded-full border border-white/16 bg-white/10 px-4 py-2 backdrop-blur-sm">
@@ -1080,6 +1202,7 @@ export default function Home() {
               </div>
 
               <button
+                type="button"
                 onClick={goNextEspacio}
                 className="group relative w-[26%] overflow-hidden rounded-[24px] bg-[#ddd1bf] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.005]"
                 aria-label="Ver siguiente imagen"
@@ -1091,10 +1214,11 @@ export default function Home() {
                   className="object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.02]"
                   sizes="26vw"
                 />
-                <div className="absolute inset-0 bg-black/8" />
+                <div aria-hidden="true" className="absolute inset-0 bg-black/8" />
               </button>
 
               <button
+                type="button"
                 onClick={goNextEspacio}
                 className="group relative w-[11%] overflow-hidden rounded-[24px] bg-[#ddd1bf] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:w-[12%]"
                 aria-label="Avanzar carrusel"
@@ -1106,12 +1230,16 @@ export default function Home() {
                   className="object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.025]"
                   sizes="11vw"
                 />
-                <div className="absolute inset-0 bg-black/20 transition-colors duration-500 group-hover:bg-black/10" />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-black/20 transition-colors duration-500 group-hover:bg-black/10"
+                />
               </button>
             </div>
           </div>
 
           <button
+            type="button"
             onClick={goPrevEspacio}
             className="absolute left-2 top-1/2 z-40 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#ffffff26] text-[#4b2e2a] backdrop-blur-md transition-all duration-300 hover:bg-white sm:left-4 sm:h-11 sm:w-11 md:left-8 md:h-12 md:w-12"
             style={{ backgroundColor: "rgba(238,230,216,0.82)" }}
@@ -1121,6 +1249,7 @@ export default function Home() {
           </button>
 
           <button
+            type="button"
             onClick={goNextEspacio}
             className="absolute right-2 top-1/2 z-40 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#ffffff26] text-[#4b2e2a] backdrop-blur-md transition-all duration-300 hover:bg-white sm:right-4 sm:h-11 sm:w-11 md:right-8 md:h-12 md:w-12"
             style={{ backgroundColor: "rgba(238,230,216,0.82)" }}
@@ -1133,6 +1262,7 @@ export default function Home() {
             {ESPACIO_IMAGES.map((_, index) => (
               <button
                 key={index}
+                type="button"
                 onClick={() => setCurrentEspacio(index)}
                 className={`h-2 rounded-full transition-all duration-500 ${
                   currentEspacio === index
@@ -1147,10 +1277,17 @@ export default function Home() {
       </section>
 
       {openCarta && (
-        <div className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-[4px]">
-          <div className="flex h-full w-full items-center justify-center px-2 py-2 sm:px-4 sm:py-4 md:px-8 md:py-8">
+        <div
+          className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-[4px]"
+          onClick={() => setOpenCarta(false)}
+        >
+          <div
+            className="flex h-full w-full items-center justify-center px-2 py-2 sm:px-4 sm:py-4 md:px-8 md:py-8"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="relative w-full max-w-[1500px]">
               <button
+                type="button"
                 onClick={() => setOpenCarta(false)}
                 className="absolute right-1 top-[-2.4rem] z-20 font-sans text-[10px] uppercase tracking-[0.22em] text-white/80 transition-opacity hover:opacity-60 sm:right-2 md:right-0 md:top-[-3rem] md:text-[11px]"
               >
@@ -1170,7 +1307,10 @@ export default function Home() {
                 </div>
 
                 <div className="relative h-[72svh] min-h-0 w-full bg-[#120d0a] sm:h-[76svh] md:h-[84vh] md:min-h-[680px]">
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/10" />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/10"
+                  />
 
                   <div className="absolute inset-0 flex items-center justify-center px-4 py-12 sm:px-8 md:px-16 md:py-20">
                     <div
@@ -1189,6 +1329,7 @@ export default function Home() {
                   </div>
 
                   <button
+                    type="button"
                     onClick={goPrevCarta}
                     className="absolute left-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/12 sm:left-4 sm:h-11 sm:w-11 md:left-7 md:h-12 md:w-12"
                     aria-label="Imagen anterior"
@@ -1197,6 +1338,7 @@ export default function Home() {
                   </button>
 
                   <button
+                    type="button"
                     onClick={goNextCarta}
                     className="absolute right-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/12 sm:right-4 sm:h-11 sm:w-11 md:right-7 md:h-12 md:w-12"
                     aria-label="Imagen siguiente"
@@ -1209,6 +1351,7 @@ export default function Home() {
                   {CARTA_IMAGES.map((_, index) => (
                     <button
                       key={index}
+                      type="button"
                       onClick={() => {
                         if (index === currentCarta) return;
                         setIsFadingCarta(true);
@@ -1233,10 +1376,17 @@ export default function Home() {
       )}
 
       {openMenuModal && (
-        <div className="fixed inset-0 z-[110] bg-black/80 backdrop-blur-[4px]">
-          <div className="flex h-full w-full items-center justify-center px-2 py-2 sm:px-4 sm:py-4 md:px-8 md:py-8">
+        <div
+          className="fixed inset-0 z-[110] bg-black/80 backdrop-blur-[4px]"
+          onClick={() => setOpenMenuModal(false)}
+        >
+          <div
+            className="flex h-full w-full items-center justify-center px-2 py-2 sm:px-4 sm:py-4 md:px-8 md:py-8"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="relative w-full max-w-[1500px]">
               <button
+                type="button"
                 onClick={() => setOpenMenuModal(false)}
                 className="absolute right-1 top-[-2.4rem] z-20 font-sans text-[10px] uppercase tracking-[0.22em] text-white/80 transition-opacity hover:opacity-60 sm:right-2 md:right-0 md:top-[-3rem] md:text-[11px]"
               >
@@ -1261,7 +1411,10 @@ export default function Home() {
                 </div>
 
                 <div className="relative h-[72svh] min-h-0 w-full bg-[#120d0a] sm:h-[76svh] md:h-[84vh] md:min-h-[680px]">
-                  <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/10" />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/10"
+                  />
 
                   <div className="absolute inset-0 flex items-center justify-center px-4 py-12 sm:px-8 md:px-16 md:py-20">
                     <div
@@ -1282,6 +1435,7 @@ export default function Home() {
                   {activeMenuData.images.length > 1 && (
                     <>
                       <button
+                        type="button"
                         onClick={goPrevMenu}
                         className="absolute left-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/12 sm:left-4 sm:h-11 sm:w-11 md:left-7 md:h-12 md:w-12"
                         aria-label="Imagen anterior"
@@ -1290,6 +1444,7 @@ export default function Home() {
                       </button>
 
                       <button
+                        type="button"
                         onClick={goNextMenu}
                         className="absolute right-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/12 bg-white/6 text-white backdrop-blur-sm transition-all duration-300 hover:bg-white/12 sm:right-4 sm:h-11 sm:w-11 md:right-7 md:h-12 md:w-12"
                         aria-label="Imagen siguiente"
@@ -1304,6 +1459,7 @@ export default function Home() {
                   {activeMenuData.images.map((_, index) => (
                     <button
                       key={index}
+                      type="button"
                       onClick={() => {
                         if (index === currentMenuImage) return;
                         setIsFadingMenu(true);
@@ -1329,6 +1485,7 @@ export default function Home() {
 
       <footer className="relative -mt-2 overflow-hidden text-[#efe6d8] md:-mt-4">
         <div
+          aria-hidden="true"
           className="absolute inset-x-0 top-0 z-20 h-24 md:h-32"
           style={{
             background:
@@ -1347,18 +1504,36 @@ export default function Home() {
             />
           </div>
 
-          <div className="absolute inset-0 bg-[rgba(20,14,11,0.16)]" />
-          <div className="absolute inset-0 bg-gradient-to-b from-[rgba(238,230,216,0.08)] via-[rgba(33,24,20,0.14)] to-[rgba(20,14,11,0.28)]" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[rgba(18,12,10,0.06)] via-transparent to-[rgba(18,12,10,0.06)]" />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[rgba(20,14,11,0.16)]"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-b from-[rgba(238,230,216,0.08)] via-[rgba(33,24,20,0.14)] to-[rgba(20,14,11,0.28)]"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-r from-[rgba(18,12,10,0.06)] via-transparent to-[rgba(18,12,10,0.06)]"
+          />
 
-          <div className="absolute left-1/2 top-[28%] h-[220px] w-[220px] -translate-x-1/2 rounded-full bg-white/[0.03] blur-[115px] md:h-[280px] md:w-[280px]" />
-          <div className="absolute left-1/2 top-[30%] h-[140px] w-[320px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.04),transparent_72%)] sm:w-[420px] md:h-[180px] md:w-[620px]" />
+          <div
+            aria-hidden="true"
+            className="absolute left-1/2 top-[28%] h-[220px] w-[220px] -translate-x-1/2 rounded-full bg-white/[0.03] blur-[115px] md:h-[280px] md:w-[280px]"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute left-1/2 top-[30%] h-[140px] w-[320px] -translate-x-1/2 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.04),transparent_72%)] sm:w-[420px] md:h-[180px] md:w-[620px]"
+          />
         </div>
 
         <div className="relative z-30 mx-auto max-w-[1480px] px-5 pb-8 pt-14 sm:px-6 md:px-12 md:pb-10">
           <div className="flex justify-center">
             <div className="footer-logo-wrap relative">
-              <div className="absolute inset-0 scale-110 rounded-full bg-white/[0.025] blur-[60px]" />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 scale-110 rounded-full bg-white/[0.025] blur-[60px]"
+              />
               <div className="relative mx-auto h-[90px] w-[190px] sm:h-[140px] sm:w-[320px] md:h-[230px] md:w-[560px] lg:h-[270px] lg:w-[700px]">
                 <Image
                   src="/logonegativo-footer.webp"
@@ -1398,16 +1573,41 @@ export default function Home() {
                 <p className="font-sans mb-4 text-[10px] uppercase tracking-[0.28em] text-white/62 sm:tracking-[0.32em]">
                   Contacto
                 </p>
+
                 <a
                   href="tel:+34883888447"
                   className="group inline-flex items-center gap-3 font-serif text-[clamp(1.05rem,4vw,1.55rem)] text-white/92 transition-all duration-300 hover:text-white"
                 >
-                  <span className="h-px w-7 bg-white/28 transition-all duration-300 group-hover:w-10 group-hover:bg-white/58" />
+                  <span
+                    aria-hidden="true"
+                    className="h-px w-7 bg-white/28 transition-all duration-300 group-hover:w-10 group-hover:bg-white/58"
+                  />
                   883 888 447
                 </a>
+
                 <p className="mt-4 max-w-[280px] font-sans text-sm leading-[1.8] text-white/52">
                   Reservas, consultas y atención personalizada.
                 </p>
+
+                <div className="mt-5 flex items-center justify-center gap-3 sm:gap-4">
+                  <a
+                    href={`mailto:${EMAIL_ADDRESS}`}
+                    aria-label="Enviar email a Román 1924"
+                    className="group inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/[0.04] text-white/80 backdrop-blur-sm transition-all duration-300 hover:-translate-y-[1px] hover:border-white/20 hover:bg-white/[0.08] hover:text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+                  >
+                    <MailIcon className="h-5 w-5" />
+                  </a>
+
+                  <a
+                    href={INSTAGRAM_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram de Román 1924"
+                    className="group inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/12 bg-white/[0.04] text-white/80 backdrop-blur-sm transition-all duration-300 hover:-translate-y-[1px] hover:border-white/20 hover:bg-white/[0.08] hover:text-white focus:outline-none focus:ring-2 focus:ring-white/30"
+                  >
+                    <InstagramIcon className="h-5 w-5" />
+                  </a>
+                </div>
               </div>
 
               <div className="flex flex-col items-center">
@@ -1416,7 +1616,7 @@ export default function Home() {
                 </p>
                 <nav className="flex flex-col items-center gap-3 font-sans text-[0.8rem] uppercase tracking-[0.2em] text-white/76 sm:text-[0.84rem] sm:tracking-[0.22em]">
                   <a
-                    href="#carta-cta"
+                    href="#carta-anchor"
                     className="transition-all duration-300 hover:translate-y-[-1px] hover:text-white"
                   >
                     Carta
