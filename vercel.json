@@ -12,4 +12,18 @@
       "permanent": true
     }
   ]
+}{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "roman1924.com"
+        }
+      ],
+      "destination": "https://www.roman1924.com/$1",
+      "permanent": true
+    }
+  ]
 }
