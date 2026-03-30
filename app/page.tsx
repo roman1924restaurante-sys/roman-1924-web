@@ -356,7 +356,7 @@ export default function Home() {
         <div className="absolute inset-0 cinematic-zoom-hero">
           <Image
             src="/hero-roman.webp"
-            alt="Interior de Roman 1924"
+            alt="Interior de Román 1924"
             fill
             priority
             quality={82}
@@ -380,7 +380,7 @@ export default function Home() {
             <div className="relative h-11 w-[135px] sm:h-12 sm:w-[150px] md:h-14 md:w-[170px]">
               <Image
                 src="/logo-roman.svg"
-                alt="Logo de Roman 1924"
+                alt="Logo de Román 1924"
                 fill
                 className="object-contain"
                 sizes="170px"
@@ -432,13 +432,17 @@ export default function Home() {
 
         <div className="relative z-20 mx-auto flex min-h-[100svh] max-w-[1440px] items-center px-5 pb-10 pt-24 sm:px-6 md:h-full md:min-h-0 md:px-12 md:pt-16">
           <div className="max-w-[760px] animate-fade-up">
+            <h1 className="sr-only">
+              Román 1924, restaurante de alta cocina en Valladolid
+            </h1>
+
             <p className="font-sans mb-5 text-[11px] uppercase tracking-[0.22em] text-white/78 sm:text-sm sm:tracking-[0.24em]">
               ROMÁN 1924
             </p>
 
-            <h1 className="font-serif max-w-[760px] text-[clamp(2.55rem,9vw,7.4rem)] leading-[0.95] text-white sm:text-[clamp(3.2rem,8vw,7.4rem)]">
+            <p className="font-serif max-w-[760px] text-[clamp(2.55rem,9vw,7.4rem)] leading-[0.95] text-white sm:text-[clamp(3.2rem,8vw,7.4rem)]">
               Herencia puesta sobre la mesa.
-            </h1>
+            </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-4">
               <a
@@ -482,7 +486,7 @@ export default function Home() {
           <div className="relative min-h-[72svh]">
             <Image
               src="/libreria-roman.webp"
-              alt="Librería interior de Roman 1924"
+              alt="Librería interior de Román 1924"
               fill
               className="object-cover"
               sizes="100vw"
@@ -534,7 +538,7 @@ export default function Home() {
                 <div className="relative w-full max-w-[268px]">
                   <Image
                     src="/titulo-carta.webp"
-                    alt="Sobre de la carta de Roman 1924"
+                    alt="Sobre de la carta de Román 1924"
                     width={900}
                     height={1200}
                     className="h-auto w-full object-contain drop-shadow-[0_20px_36px_rgba(59,36,24,0.1)]"
@@ -618,7 +622,7 @@ export default function Home() {
           <div className="relative min-h-[88svh]">
             <Image
               src="/libreria-roman.webp"
-              alt="Librería interior de Roman 1924"
+              alt="Librería interior de Román 1924"
               fill
               className="object-cover"
               sizes="100vw"
@@ -682,7 +686,7 @@ export default function Home() {
                 <div className="relative w-full max-w-[390px]">
                   <Image
                     src="/titulo-carta.webp"
-                    alt="Sobre de la carta de Roman 1924"
+                    alt="Sobre de la carta de Román 1924"
                     width={900}
                     height={1200}
                     className="h-auto w-full object-contain drop-shadow-[0_26px_48px_rgba(59,36,24,0.11)]"
@@ -766,7 +770,7 @@ export default function Home() {
           <div className="absolute inset-0">
             <Image
               src="/libreria-roman.webp"
-              alt="Librería interior de Roman 1924"
+              alt="Librería interior de Román 1924"
               fill
               className="object-cover"
               sizes="100vw"
@@ -847,7 +851,7 @@ export default function Home() {
                     <div className="relative mx-auto w-full max-w-[560px] xl:max-w-[590px]">
                       <Image
                         src="/titulo-carta.webp"
-                        alt="Sobre de la carta de Roman 1924"
+                        alt="Sobre de la carta de Román 1924"
                         width={900}
                         height={1200}
                         className="h-auto w-full object-contain drop-shadow-[0_28px_54px_rgba(59,36,24,0.11)]"
@@ -1127,7 +1131,7 @@ export default function Home() {
                 <div className="relative h-full w-full overflow-hidden rounded-[24px] bg-[#ddd1bf] shadow-[0_22px_60px_rgba(44,28,20,0.12)]">
                   <Image
                     src={visibleEspacio.center}
-                    alt={`Espacio ${visibleEspacio.centerIndex + 1} de Roman 1924`}
+                    alt={`Espacio ${visibleEspacio.centerIndex + 1} de Román 1924`}
                     fill
                     className="object-cover transition-transform duration-[1400ms] ease-out"
                     sizes="100vw"
@@ -1139,7 +1143,7 @@ export default function Home() {
 
                   <div className="absolute bottom-4 left-4 z-10">
                     <p className="pointer-events-none font-sans text-[8px] uppercase tracking-[0.24em] text-white/36 drop-shadow-[0_1px_2px_rgba(0,0,0,0.22)]">
-                      Interior · Roman 1924
+                      Interior · Román 1924
                     </p>
                   </div>
                 </div>
@@ -1157,7 +1161,7 @@ export default function Home() {
               >
                 <Image
                   src={visibleEspacio.left}
-                  alt={`Espacio ${visibleEspacio.leftIndex + 1} de Roman 1924`}
+                  alt={`Espacio ${visibleEspacio.leftIndex + 1} de Román 1924`}
                   fill
                   className="object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.025]"
                   sizes="16vw"
@@ -1171,7 +1175,7 @@ export default function Home() {
               <div className="group relative w-[47%] overflow-hidden rounded-[30px] bg-[#ddd1bf] shadow-[0_28px_80px_rgba(44,28,20,0.15)]">
                 <Image
                   src={visibleEspacio.center}
-                  alt={`Espacio ${visibleEspacio.centerIndex + 1} de Roman 1924`}
+                  alt={`Espacio ${visibleEspacio.centerIndex + 1} de Román 1924`}
                   fill
                   className="object-cover transition-transform duration-[1800ms] ease-out group-hover:scale-[1.02]"
                   sizes="47vw"
@@ -1196,7 +1200,7 @@ export default function Home() {
 
                 <div className="absolute bottom-6 left-6 z-10 xl:bottom-8 xl:left-8">
                   <p className="pointer-events-none font-sans text-[9px] uppercase tracking-[0.28em] text-white/38 drop-shadow-[0_1px_2px_rgba(0,0,0,0.22)] xl:text-[10px]">
-                    Interior · Roman 1924
+                    Interior · Román 1924
                   </p>
                 </div>
               </div>
@@ -1209,7 +1213,7 @@ export default function Home() {
               >
                 <Image
                   src={visibleEspacio.right}
-                  alt={`Espacio ${visibleEspacio.rightIndex + 1} de Roman 1924`}
+                  alt={`Espacio ${visibleEspacio.rightIndex + 1} de Román 1924`}
                   fill
                   className="object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.02]"
                   sizes="26vw"
@@ -1225,7 +1229,7 @@ export default function Home() {
               >
                 <Image
                   src={visibleEspacio.farRight}
-                  alt={`Espacio ${visibleEspacio.farRightIndex + 1} de Roman 1924`}
+                  alt={`Espacio ${visibleEspacio.farRightIndex + 1} de Román 1924`}
                   fill
                   className="object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.025]"
                   sizes="11vw"
@@ -1497,7 +1501,7 @@ export default function Home() {
           <div className="footer-bg absolute inset-0">
             <Image
               src="/fondo-footer.webp"
-              alt="Fondo footer Roman 1924"
+              alt="Fondo footer Román 1924"
               fill
               className="object-cover object-center opacity-[0.5]"
               sizes="100vw"
@@ -1537,7 +1541,7 @@ export default function Home() {
               <div className="relative mx-auto h-[90px] w-[190px] sm:h-[140px] sm:w-[320px] md:h-[230px] md:w-[560px] lg:h-[270px] lg:w-[700px]">
                 <Image
                   src="/logonegativo-footer.webp"
-                  alt="Logo Roman 1924"
+                  alt="Logo Román 1924"
                   fill
                   className="object-contain opacity-[0.98] drop-shadow-[0_12px_34px_rgba(0,0,0,0.16)]"
                   sizes="(max-width: 640px) 190px, (max-width: 768px) 320px, 700px"
