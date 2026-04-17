@@ -22,6 +22,8 @@ const RESERVATION_URL =
 
 const EMAIL_ADDRESS = "roman1924@roman1924.com";
 const INSTAGRAM_URL = "https://instagram.com/roman1924_rest";
+const SUBSIDY_PDF_URL = "/CARTEL.pdf";
+const SUBSIDY_IMAGE_URL = "/cartel-subvencion.png";
 
 const CARTA_IMAGES = [
   "/carta-precios-01.webp",
@@ -1723,6 +1725,46 @@ export default function Home() {
           }
         `}</style>
       </footer>
+
+      <section
+        id="subvencion"
+        className="relative overflow-hidden pb-16 pt-14 md:pb-24 md:pt-20"
+        style={{ backgroundColor: SOFT_BEIGE }}
+      >
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-6 md:px-12">
+          <div className="mx-auto max-w-[1280px]">
+            <div className="mx-auto h-[52px] w-full max-w-[1280px] rounded-[18px] bg-[#4b2e2a] md:h-[64px] md:rounded-[22px]" />
+          </div>
+
+          <div className="mx-auto flex max-w-[1280px] justify-center pt-10 md:pt-14">
+            <div className="w-full max-w-[430px] md:max-w-[500px] lg:max-w-[560px]">
+              <div className="rounded-[20px] border border-[#b9a78d]/16 bg-white/42 p-3 shadow-[0_20px_56px_rgba(62,38,25,0.08)] backdrop-blur-[2px] md:rounded-[24px] md:p-4">
+                <div className="overflow-hidden rounded-[14px] bg-white shadow-[0_12px_32px_rgba(0,0,0,0.06)] md:rounded-[16px]">
+                  <Image
+                    src={SUBSIDY_IMAGE_URL}
+                    alt="Cartel oficial de subvención"
+                    width={1240}
+                    height={1754}
+                    className="h-auto w-full object-contain"
+                    sizes="(max-width: 768px) 92vw, (max-width: 1200px) 500px, 560px"
+                  />
+                </div>
+              </div>
+
+              <div className="mt-5 flex justify-center">
+                <a
+                  href={SUBSIDY_PDF_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-sans text-[10px] uppercase tracking-[0.18em] text-[#4b2e2a]/58 transition-opacity duration-300 hover:opacity-75 md:text-[11px]"
+                >
+                  Ver cartel completo
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }
