@@ -22,8 +22,8 @@ const RESERVATION_URL =
 
 const EMAIL_ADDRESS = "roman1924@roman1924.com";
 const INSTAGRAM_URL = "https://instagram.com/roman1924_rest";
-const SUBSIDY_PDF_URL = "/CARTEL.pdf";
 const SUBSIDY_IMAGE_URL = "/cartel-subvencion.png";
+const ACECALE_LOGO_URL = "/acecale-logo.png";
 
 const CARTA_IMAGES = [
   "/carta-precios-01.webp",
@@ -1738,18 +1738,31 @@ export default function Home() {
 
           <div className="mx-auto max-w-[1280px] pt-10 md:pt-14">
             <div className="flex justify-start">
-              <div className="w-full max-w-[360px] md:max-w-[410px] lg:max-w-[460px] xl:ml-24">
-                <div className="rounded-[20px] border border-[#b9a78d]/16 bg-white/42 p-3 shadow-[0_20px_56px_rgba(62,38,25,0.08)] backdrop-blur-[2px] md:rounded-[24px] md:p-4">
-                  <div className="overflow-hidden rounded-[14px] bg-white shadow-[0_12px_32px_rgba(0,0,0,0.06)] md:rounded-[16px]">
-                    <Image
-                      src={SUBSIDY_IMAGE_URL}
-                      alt="Cartel oficial de subvención"
-                      width={1240}
-                      height={1754}
-                      className="h-auto w-full object-contain"
-                      sizes="(max-width: 768px) 82vw, (max-width: 1200px) 410px, 460px"
-                    />
+              <div className="flex w-full flex-col items-start gap-8 md:flex-row md:items-center md:gap-10 xl:ml-24">
+                <div className="w-full max-w-[360px] md:max-w-[410px] lg:max-w-[460px]">
+                  <div className="rounded-[20px] border border-[#b9a78d]/16 bg-white/42 p-3 shadow-[0_20px_56px_rgba(62,38,25,0.08)] backdrop-blur-[2px] md:rounded-[24px] md:p-4">
+                    <div className="overflow-hidden rounded-[14px] bg-white shadow-[0_12px_32px_rgba(0,0,0,0.06)] md:rounded-[16px]">
+                      <Image
+                        src={SUBSIDY_IMAGE_URL}
+                        alt="Cartel oficial de subvención"
+                        width={1240}
+                        height={1754}
+                        className="h-auto w-full object-contain"
+                        sizes="(max-width: 768px) 82vw, (max-width: 1200px) 410px, 460px"
+                      />
+                    </div>
                   </div>
+                </div>
+
+                <div className="w-[120px] shrink-0 self-center sm:w-[135px] md:w-[150px] lg:w-[165px]">
+                  <Image
+                    src={ACECALE_LOGO_URL}
+                    alt="Logo ACECALE"
+                    width={700}
+                    height={700}
+                    className="h-auto w-full object-contain drop-shadow-[0_12px_24px_rgba(62,38,25,0.08)]"
+                    sizes="(max-width: 768px) 135px, 165px"
+                  />
                 </div>
               </div>
             </div>
