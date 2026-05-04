@@ -31,6 +31,19 @@ const CARTA_IMAGES = [
   "/carta-precios-03.webp",
 ] as const;
 
+const GALLERY_IMAGES = [
+  "/galeria-01.webp",
+  "/galeria-02.webp",
+  "/galeria-03.webp",
+  "/galeria-04.webp",
+  "/galeria-05.webp",
+  "/galeria-06.webp",
+  "/galeria-07.webp",
+  "/galeria-08.webp",
+  "/galeria-09.webp",
+  "/galeria-10.webp",
+] as const;
+
 const ESPACIO_IMAGES = [
   "/espacio-1.webp",
   "/espacio-2.webp",
@@ -102,6 +115,21 @@ function InstagramIcon({ className = "" }: { className?: string }) {
   );
 }
 
+function getVisibleGalleryImages(currentGallery: number) {
+  const left = currentGallery;
+  const center = (currentGallery + 1) % GALLERY_IMAGES.length;
+  const right = (currentGallery + 2) % GALLERY_IMAGES.length;
+
+  return {
+    left: GALLERY_IMAGES[left],
+    center: GALLERY_IMAGES[center],
+    right: GALLERY_IMAGES[right],
+    leftIndex: left,
+    centerIndex: center,
+    rightIndex: right,
+  };
+}
+
 function getVisibleEspacioImages(currentEspacio: number) {
   const prev =
     (currentEspacio - 1 + ESPACIO_IMAGES.length) % ESPACIO_IMAGES.length;
@@ -126,6 +154,9 @@ export default function Home() {
   const [currentCarta, setCurrentCarta] = useState(0);
   const [isFadingCarta, setIsFadingCarta] = useState(false);
 
+  const [currentGallery, setCurrentGallery] = useState(0);
+  const [isGalleryPaused, setIsGalleryPaused] = useState(false);
+
   const [openMenuModal, setOpenMenuModal] = useState(false);
   const [activeMenu, setActiveMenu] = useState<TastingMenuKey>("memoria");
   const [currentMenuImage, setCurrentMenuImage] = useState(0);
@@ -141,6 +172,11 @@ export default function Home() {
 
   const activeMenuData =
     TASTING_MENUS.find((menu) => menu.key === activeMenu) ?? TASTING_MENUS[0];
+
+  const visibleGallery = useMemo(
+    () => getVisibleGalleryImages(currentGallery),
+    [currentGallery]
+  );
 
   const visibleEspacio = useMemo(
     () => getVisibleEspacioImages(currentEspacio),
@@ -164,6 +200,16 @@ export default function Home() {
       document.body.style.overflow = "";
     };
   }, [anyModalOpen]);
+
+  useEffect(() => {
+    if (isGalleryPaused || anyModalOpen) return;
+
+    const interval = window.setInterval(() => {
+      setCurrentGallery((prev) => (prev + 1) % GALLERY_IMAGES.length);
+    }, 4200);
+
+    return () => window.clearInterval(interval);
+  }, [isGalleryPaused, anyModalOpen]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 768px)");
@@ -309,6 +355,16 @@ export default function Home() {
   const openCartaModal = () => {
     setCurrentCarta(0);
     setOpenCarta(true);
+  };
+
+  const goNextGallery = () => {
+    setCurrentGallery((prev) => (prev + 1) % GALLERY_IMAGES.length);
+  };
+
+  const goPrevGallery = () => {
+    setCurrentGallery(
+      (prev) => (prev - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length
+    );
   };
 
   const openSelectedMenuModal = (menuKey: TastingMenuKey) => {
@@ -939,6 +995,117 @@ export default function Home() {
             </div>
           </div>
         </section>
+      </section>
+
+      <section
+        id="galeria"
+        className="relative overflow-hidden pb-12 pt-4 md:pb-16 md:pt-6 lg:pb-20 lg:pt-8"
+        style={{ backgroundColor: SOFT_BEIGE }}
+      >
+        <div className="mx-auto max-w-[1440px] px-5 sm:px-6 md:px-12">
+          <div className="mx-auto mb-8 h-px max-w-[1280px] md:mb-12"
+            style={{
+              background:
+                "linear-gradient(to right, transparent 0%, rgba(75,46,42,0.10) 18%, rgba(75,46,42,0.18) 50%, rgba(75,46,42,0.10) 82%, transparent 100%)",
+            }}
+          />
+
+          <div className="mx-auto max-w-[980px] text-center">
+            <p className="font-sans mb-5 text-[11px] uppercase tracking-[0.18em] text-[#9b8b68] sm:text-sm sm:tracking-[0.2em]">
+              GALERÍA
+            </p>
+
+            <h3 className="font-serif text-[clamp(2rem,7vw,4.8rem)] leading-[1.04] tracking-[-0.03em] text-[#4b2e2a]">
+              Instantes alrededor
+              <br />
+              de la mesa.
+            </h3>
+          </div>
+        </div>
+
+        <div
+          className="relative mt-10 md:mt-14"
+          onMouseEnter={() => setIsGalleryPaused(true)}
+          onMouseLeave={() => setIsGalleryPaused(false)}
+        >
+          <div className="mx-auto max-w-[1760px] px-5 sm:px-6 md:px-12">
+            <div className="grid gap-4 md:grid-cols-3 md:gap-6 lg:gap-8">
+              {[
+                {
+                  src: visibleGallery.left,
+                  index: visibleGallery.leftIndex,
+                  className: "md:block",
+                },
+                {
+                  src: visibleGallery.center,
+                  index: visibleGallery.centerIndex,
+                  className: "hidden md:block",
+                },
+                {
+                  src: visibleGallery.right,
+                  index: visibleGallery.rightIndex,
+                  className: "hidden md:block",
+                },
+              ].map((image, position) => (
+                <button
+                  key={`${image.src}-${position}`}
+                  type="button"
+                  onClick={goNextGallery}
+                  className={`group relative aspect-[1.42/1] w-full overflow-hidden bg-[#ddd1bf] shadow-[0_18px_48px_rgba(62,38,25,0.08)] transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:shadow-[0_24px_64px_rgba(62,38,25,0.12)] ${image.className}`}
+                  aria-label={`Ver siguiente imagen de galería`}
+                >
+                  <Image
+                    src={image.src}
+                    alt={`Galería de Román 1924 ${image.index + 1}`}
+                    fill
+                    className="object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.035]"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-80"
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={goPrevGallery}
+            className="absolute left-2 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#ffffff26] text-[#4b2e2a] backdrop-blur-md transition-all duration-300 hover:bg-white sm:left-4 sm:h-11 sm:w-11 md:left-8 md:h-12 md:w-12"
+            style={{ backgroundColor: "rgba(238,230,216,0.82)" }}
+            aria-label="Imagen anterior de galería"
+          >
+            <span className="text-lg leading-none sm:text-xl">‹</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={goNextGallery}
+            className="absolute right-2 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#ffffff26] text-[#4b2e2a] backdrop-blur-md transition-all duration-300 hover:bg-white sm:right-4 sm:h-11 sm:w-11 md:right-8 md:h-12 md:w-12"
+            style={{ backgroundColor: "rgba(238,230,216,0.82)" }}
+            aria-label="Imagen siguiente de galería"
+          >
+            <span className="text-lg leading-none sm:text-xl">›</span>
+          </button>
+
+          <div className="mt-8 flex items-center justify-center gap-2.5 md:mt-10">
+            {GALLERY_IMAGES.map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => setCurrentGallery(index)}
+                className={`h-2 rounded-full transition-all duration-500 ${
+                  currentGallery === index
+                    ? "w-10 bg-[#4b2e2a]"
+                    : "w-2 bg-[#4b2e2a]/25 hover:bg-[#4b2e2a]/45"
+                }`}
+                aria-label={`Ir a la imagen ${index + 1} de la galería`}
+              />
+            ))}
+          </div>
+        </div>
       </section>
 
       <section
