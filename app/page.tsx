@@ -1011,15 +1011,9 @@ export default function Home() {
           />
 
           <div className="mx-auto max-w-[980px] text-center">
-            <p className="font-sans mb-5 text-[11px] uppercase tracking-[0.18em] text-[#9b8b68] sm:text-sm sm:tracking-[0.2em]">
+            <p className="font-sans mb-8 text-[11px] uppercase tracking-[0.18em] text-[#9b8b68] sm:mb-10 sm:text-sm sm:tracking-[0.2em]">
               GALERÍA
             </p>
-
-            <h3 className="font-serif text-[clamp(2rem,7vw,4.8rem)] leading-[1.04] tracking-[-0.03em] text-[#4b2e2a]">
-              Instantes alrededor
-              <br />
-              de la mesa.
-            </h3>
           </div>
         </div>
 
@@ -1939,3 +1933,4 @@ export default function Home() {
     </main>
   );
 }
+
