@@ -1003,7 +1003,8 @@ export default function Home() {
         style={{ backgroundColor: SOFT_BEIGE }}
       >
         <div className="mx-auto max-w-[1440px] px-5 sm:px-6 md:px-12">
-          <div className="mx-auto mb-8 h-px max-w-[1280px] md:mb-12"
+          <div
+            className="mx-auto mb-8 h-px max-w-[1280px] md:mb-12"
             style={{
               background:
                 "linear-gradient(to right, transparent 0%, rgba(75,46,42,0.10) 18%, rgba(75,46,42,0.18) 50%, rgba(75,46,42,0.10) 82%, transparent 100%)",
@@ -1714,7 +1715,7 @@ export default function Home() {
           </div>
 
           <div className="mt-8 border-t border-white/12 pt-8 md:mt-12 md:pt-10">
-            <div className="mx-auto grid max-w-[1180px] gap-8 text-center md:grid-cols-3 md:items-start md:gap-8">
+            <div className="mx-auto grid max-w-[1280px] gap-8 text-center sm:grid-cols-2 md:grid-cols-4 md:items-start md:gap-8">
               <div className="flex flex-col items-center">
                 <p className="font-sans mb-4 text-[10px] uppercase tracking-[0.28em] text-white/62 sm:tracking-[0.32em]">
                   Dirección
@@ -1775,6 +1776,26 @@ export default function Home() {
                     <InstagramIcon className="h-5 w-5" />
                   </a>
                 </div>
+              </div>
+
+              <div className="flex flex-col items-center">
+                <p className="font-sans mb-4 text-[10px] uppercase tracking-[0.28em] text-white/62 sm:tracking-[0.32em]">
+                  Horario
+                </p>
+
+                <p className="font-serif text-[clamp(1.05rem,3.4vw,1.35rem)] leading-[1.55] text-white/92">
+                  Miércoles a domingo
+                </p>
+
+                <p className="mt-3 font-sans text-sm leading-[1.8] text-white/62">
+                  13:30–15:30
+                  <br />
+                  20:30–23:00
+                </p>
+
+                <p className="mt-4 font-sans text-[0.82rem] uppercase tracking-[0.16em] text-white/42">
+                  Lunes y martes cerrado
+                </p>
               </div>
 
               <div className="flex flex-col items-center">
@@ -1933,4 +1954,3 @@ export default function Home() {
     </main>
   );
 }
-
