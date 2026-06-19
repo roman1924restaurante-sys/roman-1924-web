@@ -24,6 +24,8 @@ const EMAIL_ADDRESS = "roman1924@roman1924.com";
 const INSTAGRAM_URL = "https://instagram.com/roman1924_rest";
 const SUBSIDY_IMAGE_URL = "/cartel-subvencion.png";
 const ACECALE_LOGO_URL = "/acecale-logo.png";
+const BENEFICIARY_IMAGE_URL = "/cartel-beneficiario-jcyl.webp";
+const NOS_IMPULSA_LOGO_URL = "/nos-impulsa-jcyl.webp";
 
 const CARTA_IMAGES = [
   "/carta-precios-01.webp",
@@ -1919,33 +1921,57 @@ export default function Home() {
           </div>
 
           <div className="mx-auto max-w-[1280px] pt-10 md:pt-14">
-            <div className="flex justify-start">
-              <div className="flex w-full flex-col items-start gap-8 md:flex-row md:items-center md:gap-10 xl:ml-24">
-                <div className="w-full max-w-[360px] md:max-w-[410px] lg:max-w-[460px]">
-                  <div className="rounded-[20px] border border-[#b9a78d]/16 bg-white/42 p-3 shadow-[0_20px_56px_rgba(62,38,25,0.08)] backdrop-blur-[2px] md:rounded-[24px] md:p-4">
-                    <div className="overflow-hidden rounded-[14px] bg-white shadow-[0_12px_32px_rgba(0,0,0,0.06)] md:rounded-[16px]">
-                      <Image
-                        src={SUBSIDY_IMAGE_URL}
-                        alt="Cartel oficial de subvención"
-                        width={1240}
-                        height={1754}
-                        className="h-auto w-full object-contain"
-                        sizes="(max-width: 768px) 82vw, (max-width: 1200px) 410px, 460px"
-                      />
-                    </div>
+            <div className="grid items-center justify-items-center gap-8 sm:grid-cols-2 lg:grid-cols-[minmax(240px,460px)_minmax(120px,170px)_minmax(240px,420px)_minmax(180px,340px)] lg:gap-10">
+              <div className="w-full max-w-[360px] md:max-w-[410px] lg:max-w-[460px]">
+                <div className="rounded-[20px] border border-[#b9a78d]/16 bg-white/42 p-3 shadow-[0_20px_56px_rgba(62,38,25,0.08)] backdrop-blur-[2px] md:rounded-[24px] md:p-4">
+                  <div className="overflow-hidden rounded-[14px] bg-white shadow-[0_12px_32px_rgba(0,0,0,0.06)] md:rounded-[16px]">
+                    <Image
+                      src={SUBSIDY_IMAGE_URL}
+                      alt="Cartel oficial de subvención"
+                      width={1240}
+                      height={1754}
+                      className="h-auto w-full object-contain"
+                      sizes="(max-width: 640px) 86vw, (max-width: 1024px) 42vw, 460px"
+                    />
                   </div>
                 </div>
+              </div>
 
-                <div className="w-[120px] shrink-0 self-center sm:w-[135px] md:w-[150px] lg:w-[165px]">
-                  <Image
-                    src={ACECALE_LOGO_URL}
-                    alt="Logo ACECALE"
-                    width={700}
-                    height={700}
-                    className="h-auto w-full object-contain drop-shadow-[0_12px_24px_rgba(62,38,25,0.08)]"
-                    sizes="(max-width: 768px) 135px, 165px"
-                  />
+              <div className="w-[120px] shrink-0 sm:w-[135px] md:w-[150px] lg:w-[165px]">
+                <Image
+                  src={ACECALE_LOGO_URL}
+                  alt="Logo ACECALE"
+                  width={700}
+                  height={700}
+                  className="h-auto w-full object-contain drop-shadow-[0_12px_24px_rgba(62,38,25,0.08)]"
+                  sizes="(max-width: 640px) 120px, (max-width: 1024px) 135px, 165px"
+                />
+              </div>
+
+              <div className="w-full max-w-[340px] md:max-w-[380px] lg:max-w-[420px]">
+                <div className="rounded-[20px] border border-[#b9a78d]/16 bg-white/42 p-3 shadow-[0_20px_56px_rgba(62,38,25,0.08)] backdrop-blur-[2px] md:rounded-[24px] md:p-4">
+                  <div className="overflow-hidden rounded-[14px] bg-white shadow-[0_12px_32px_rgba(0,0,0,0.06)] md:rounded-[16px]">
+                    <Image
+                      src={BENEFICIARY_IMAGE_URL}
+                      alt="Cartel beneficiario Junta de Castilla y León"
+                      width={1016}
+                      height={1510}
+                      className="h-auto w-full object-contain"
+                      sizes="(max-width: 640px) 86vw, (max-width: 1024px) 42vw, 420px"
+                    />
+                  </div>
                 </div>
+              </div>
+
+              <div className="w-full max-w-[300px] sm:col-span-2 lg:col-span-1 lg:max-w-[340px]">
+                <Image
+                  src={NOS_IMPULSA_LOGO_URL}
+                  alt="Nos impulsa Junta de Castilla y León"
+                  width={1100}
+                  height={460}
+                  className="h-auto w-full object-contain drop-shadow-[0_12px_24px_rgba(62,38,25,0.08)]"
+                  sizes="(max-width: 640px) 76vw, (max-width: 1024px) 300px, 340px"
+                />
               </div>
             </div>
           </div>
