@@ -615,19 +615,16 @@ export default function Home() {
                     <div className="w-[25.5%] min-w-[68px] text-center">
                       <div className="flex flex-col items-center gap-[0.12rem]">
                         <p className="w-full text-center font-serif text-[clamp(0.38rem,1.28vw,0.52rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
-                          Habitas verdes braseadas
+                          Créme brûlée de tomate
                         </p>
                         <p className="w-full text-center font-serif text-[clamp(0.38rem,1.28vw,0.52rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
-                          Lenteja con paloma torcaz
+                          Salmorejo de cereza
                         </p>
                         <p className="w-full text-center font-serif text-[clamp(0.38rem,1.28vw,0.52rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
-                          Mero Negro
+                          Ravioli de capón
                         </p>
                         <p className="w-full text-center font-serif text-[clamp(0.38rem,1.28vw,0.52rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
-                          Codorniz Escabechada
-                        </p>
-                        <p className="w-full text-center font-serif text-[clamp(0.38rem,1.28vw,0.52rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
-                          Lechazo Churro
+                          Rable de lechazo
                         </p>
                       </div>
                     </div>
@@ -763,19 +760,16 @@ export default function Home() {
                     <div className="w-[30%] min-w-[110px] text-center">
                       <div className="flex flex-col items-center gap-[0.25rem]">
                         <p className="w-full text-center font-serif text-[clamp(0.62rem,1.08vw,0.86rem)] leading-[1.22] text-[#7a5b4d]">
-                          Habitas verdes braseadas
+                          Créme brûlée de tomate
                         </p>
                         <p className="w-full text-center font-serif text-[clamp(0.62rem,1.08vw,0.86rem)] leading-[1.22] text-[#7a5b4d]">
-                          Lenteja con paloma torcaz
+                          Salmorejo de cereza
                         </p>
                         <p className="w-full text-center font-serif text-[clamp(0.62rem,1.08vw,0.86rem)] leading-[1.22] text-[#7a5b4d]">
-                          Mero Negro
+                          Ravioli de capón
                         </p>
                         <p className="w-full text-center font-serif text-[clamp(0.62rem,1.08vw,0.86rem)] leading-[1.22] text-[#7a5b4d]">
-                          Codorniz Escabechada
-                        </p>
-                        <p className="w-full text-center font-serif text-[clamp(0.62rem,1.08vw,0.86rem)] leading-[1.22] text-[#7a5b4d]">
-                          Lechazo Churro
+                          Rable de lechazo
                         </p>
                       </div>
                     </div>
@@ -928,19 +922,16 @@ export default function Home() {
                         <div className="w-[29.5%] min-w-[132px] text-center">
                           <div className="flex flex-col items-center gap-[0.24rem]">
                             <p className="w-full text-center font-serif text-[clamp(0.72rem,0.9vw,0.96rem)] leading-[1.22] tracking-[0.001em] text-[#7a5b4d]">
-                              Habitas verdes braseadas
+                              Créme brûlée de tomate
                             </p>
                             <p className="w-full text-center font-serif text-[clamp(0.72rem,0.9vw,0.96rem)] leading-[1.22] tracking-[0.001em] text-[#7a5b4d]">
-                              Lenteja con paloma torcaz
+                              Salmorejo de cereza
                             </p>
                             <p className="w-full text-center font-serif text-[clamp(0.72rem,0.9vw,0.96rem)] leading-[1.22] tracking-[0.001em] text-[#7a5b4d]">
-                              Mero Negro
+                              Ravioli de capón
                             </p>
                             <p className="w-full text-center font-serif text-[clamp(0.72rem,0.9vw,0.96rem)] leading-[1.22] tracking-[0.001em] text-[#7a5b4d]">
-                              Codorniz Escabechada
-                            </p>
-                            <p className="w-full text-center font-serif text-[clamp(0.72rem,0.9vw,0.96rem)] leading-[1.22] tracking-[0.001em] text-[#7a5b4d]">
-                              Lechazo Churro
+                              Rable de lechazo
                             </p>
                           </div>
                         </div>
