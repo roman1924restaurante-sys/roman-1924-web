@@ -50,3 +50,10 @@ node-v24.14.0.pkg
 *.dmg
 *.pkg
 *.zip
+
+Framer.zip
+VSCode-darwin-universal.dmg
+node-v24.14.0.pkg
+*.dmg
+*.pkg
+*.zip
