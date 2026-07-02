@@ -60,7 +60,7 @@ const TASTING_MENUS: TastingMenu[] = [
     key: "memoria",
     label: "MENÚ DEGUSTACIÓN",
     title: "Memoria",
-    price: "118 €",
+    price: "108 €",
     description:
       "Un recorrido más amplio, atravesado por la despensa, la huerta, el río, el monte y el horno.",
     summary:
@@ -70,8 +70,8 @@ const TASTING_MENUS: TastingMenu[] = [
   {
     key: "lumbre",
     label: "MENÚ DEGUSTACIÓN",
-    title: "Lumbre",
-    price: "69 €",
+    title: "Huerta",
+    price: "68 €",
     description:
       "Una lectura más esencial y directa, construida alrededor del fuego, la despensa y los sabores de raíz.",
     summary:
