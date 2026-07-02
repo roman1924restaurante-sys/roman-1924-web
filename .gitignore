@@ -43,3 +43,10 @@ Frame.zip
 VSCode-darwin-universal.dmg
 VSCode-darwin-universal.dmg
 Frame.zip
+
+Frame.zip
+VSCode-darwin-universal.dmg
+node-v24.14.0.pkg
+*.dmg
+*.pkg
+*.zip
