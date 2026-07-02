@@ -76,7 +76,7 @@ const TASTING_MENUS: TastingMenu[] = [
       "Una lectura más esencial y directa, construida alrededor del fuego, la despensa y los sabores de raíz.",
     summary:
       "Una experiencia más concisa, sobria y precisa, con el mismo lenguaje de temporada y herencia.",
-    images: ["/menu-lumbre-01.webp", "/menu-lumbre-02.webp"],
+    images: ["/menu-lumbre-02.webp"],
   },
 ];
 
