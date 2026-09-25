@@ -26,7 +26,7 @@ const SUBSIDY_IMAGE_URL = "/cartel-subvencion.png";
 const ACECALE_LOGO_URL = "/acecale-logo.png";
 const BENEFICIARY_IMAGE_URL = "/cartel-beneficiario-jcyl.webp";
 const NOS_IMPULSA_LOGO_URL = "/nos-impulsa-jcyl.webp";
-const ALIMENTOS_VALLADOLID_LOGO_URL = "/Alimentos_Valladolid.webp";
+const ALIMENTOS_VALLADOLID_LOGO_URL = "/Alimentos_Valladolid.png";
 
 const CARTA_IMAGES = [
   "/carta-precios-01.webp",
@@ -1913,77 +1913,77 @@ export default function Home() {
             <div className="mx-auto h-[52px] w-full max-w-[1280px] rounded-[18px] bg-[#241712] md:h-[64px] md:rounded-[22px]" />
           </div>
 
-          {/* Imágenes de subvención */}
-          <div className="mx-auto max-w-[1120px] pt-10 md:pt-14">
-            <div className="grid items-center justify-items-center gap-8 sm:grid-cols-2 lg:grid-cols-[minmax(190px,330px)_minmax(90px,120px)_minmax(190px,300px)_minmax(150px,250px)] lg:gap-10">
-              {/* Cartel subvención */}
-              <div className="w-full max-w-[280px] md:max-w-[310px] lg:max-w-[330px]">
-                <div className="rounded-[20px] border border-[#b9a78d]/16 bg-white/42 p-3 shadow-[0_20px_56px_rgba(62,38,25,0.08)] backdrop-blur-[2px] md:rounded-[24px] md:p-4">
-                  <div className="overflow-hidden rounded-[14px] bg-white shadow-[0_12px_32px_rgba(0,0,0,0.06)] md:rounded-[16px]">
-                    <Image
-                      src={SUBSIDY_IMAGE_URL}
-                      alt="Cartel oficial de subvención"
-                      width={1240}
-                      height={1754}
-                      className="h-auto w-full object-contain"
-                      sizes="(max-width: 640px) 78vw, (max-width: 1024px) 34vw, 330px"
-                    />
+          {/* Bloque de subvenciones y colaboradores */}
+          <div className="mx-auto max-w-[1080px] pt-10 md:pt-14">
+            <div className="grid items-center justify-items-center gap-12 lg:grid-cols-[minmax(240px,1fr)_180px_minmax(220px,1fr)] lg:gap-14">
+              {/* Izquierda: primer cartel + Nos impulsa debajo */}
+              <div className="flex w-full flex-col items-center lg:justify-self-start">
+                <div className="w-full max-w-[245px] md:max-w-[265px]">
+                  <div className="rounded-[18px] border border-[#b9a78d]/16 bg-white/42 p-2.5 shadow-[0_18px_48px_rgba(62,38,25,0.07)] backdrop-blur-[2px] md:rounded-[20px] md:p-3">
+                    <div className="overflow-hidden rounded-[12px] bg-white shadow-[0_10px_28px_rgba(0,0,0,0.05)] md:rounded-[14px]">
+                      <Image
+                        src={SUBSIDY_IMAGE_URL}
+                        alt="Cartel oficial de subvención"
+                        width={1240}
+                        height={1754}
+                        className="h-auto w-full object-contain"
+                        sizes="(max-width: 640px) 76vw, 265px"
+                      />
+                    </div>
                   </div>
+                </div>
+
+                <div className="mt-6 w-full max-w-[170px] md:max-w-[185px]">
+                  <Image
+                    src={NOS_IMPULSA_LOGO_URL}
+                    alt="Nos impulsa Junta de Castilla y León"
+                    width={1100}
+                    height={460}
+                    className="h-auto w-full object-contain drop-shadow-[0_10px_20px_rgba(62,38,25,0.06)]"
+                    sizes="(max-width: 640px) 170px, 185px"
+                  />
                 </div>
               </div>
 
-              {/* Logo ACECALE */}
-              <div className="w-[95px] shrink-0 sm:w-[105px] md:w-[115px] lg:w-[120px]">
-                <Image
-                  src={ACECALE_LOGO_URL}
-                  alt="Logo ACECALE"
-                  width={700}
-                  height={700}
-                  className="h-auto w-full object-contain drop-shadow-[0_12px_24px_rgba(62,38,25,0.08)]"
-                  sizes="(max-width: 640px) 95px, (max-width: 1024px) 115px, 120px"
-                />
+              {/* Centro: ACECALE + Alimentos de Valladolid, uno encima del otro */}
+              <div className="flex w-full flex-col items-center justify-center gap-8 lg:gap-10">
+                <div className="w-[76px] sm:w-[82px] md:w-[88px] lg:w-[92px]">
+                  <Image
+                    src={ACECALE_LOGO_URL}
+                    alt="Logo ACECALE"
+                    width={700}
+                    height={700}
+                    className="h-auto w-full object-contain drop-shadow-[0_10px_20px_rgba(62,38,25,0.06)]"
+                    sizes="92px"
+                  />
+                </div>
+
+                <div className="relative h-[70px] w-[105px] sm:h-[76px] sm:w-[115px] md:h-[82px] md:w-[125px] lg:h-[86px] lg:w-[132px]">
+                  <Image
+                    src={ALIMENTOS_VALLADOLID_LOGO_URL}
+                    alt="Alimentos de Valladolid"
+                    fill
+                    className="object-contain"
+                    sizes="132px"
+                  />
+                </div>
               </div>
 
-              {/* Cartel beneficiario */}
-              <div className="w-full max-w-[250px] md:max-w-[280px] lg:max-w-[300px]">
-                <div className="rounded-[20px] border border-[#b9a78d]/16 bg-white/42 p-3 shadow-[0_20px_56px_rgba(62,38,25,0.08)] backdrop-blur-[2px] md:rounded-[24px] md:p-4">
-                  <div className="overflow-hidden rounded-[14px] bg-white shadow-[0_12px_32px_rgba(0,0,0,0.06)] md:rounded-[16px]">
+              {/* Derecha: cartel Aquí invierte, más pequeño */}
+              <div className="w-full max-w-[205px] md:max-w-[220px] lg:max-w-[230px] lg:justify-self-end">
+                <div className="rounded-[18px] border border-[#b9a78d]/16 bg-white/42 p-2.5 shadow-[0_18px_48px_rgba(62,38,25,0.07)] backdrop-blur-[2px] md:rounded-[20px] md:p-3">
+                  <div className="overflow-hidden rounded-[12px] bg-white shadow-[0_10px_28px_rgba(0,0,0,0.05)] md:rounded-[14px]">
                     <Image
                       src={BENEFICIARY_IMAGE_URL}
                       alt="Cartel beneficiario Junta de Castilla y León"
                       width={1016}
                       height={1510}
                       className="h-auto w-full object-contain"
-                      sizes="(max-width: 640px) 78vw, (max-width: 1024px) 34vw, 300px"
+                      sizes="(max-width: 640px) 68vw, 230px"
                     />
                   </div>
                 </div>
               </div>
-
-              {/* Logo Nos impulsa */}
-              <div className="w-full max-w-[220px] sm:col-span-2 lg:col-span-1 lg:max-w-[250px]">
-                <Image
-                  src={NOS_IMPULSA_LOGO_URL}
-                  alt="Nos impulsa Junta de Castilla y León"
-                  width={1100}
-                  height={460}
-                  className="h-auto w-full object-contain drop-shadow-[0_12px_24px_rgba(62,38,25,0.08)]"
-                  sizes="(max-width: 640px) 60vw, (max-width: 1024px) 220px, 250px"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Logo Alimentos de Valladolid */}
-          <div className="mt-14 flex justify-center md:mt-16">
-            <div className="relative h-[90px] w-full max-w-[260px] md:h-[110px] md:max-w-[320px]">
-              <Image
-                src={ALIMENTOS_VALLADOLID_LOGO_URL}
-                alt="Alimentos de Valladolid"
-                fill
-                className="object-contain"
-                sizes="(max-width: 768px) 260px, 320px"
-              />
             </div>
           </div>
         </div>
