@@ -26,6 +26,7 @@ const SUBSIDY_IMAGE_URL = "/cartel-subvencion.png";
 const ACECALE_LOGO_URL = "/acecale-logo.png";
 const BENEFICIARY_IMAGE_URL = "/cartel-beneficiario-jcyl.webp";
 const NOS_IMPULSA_LOGO_URL = "/nos-impulsa-jcyl.webp";
+const ALIMENTOS_VALLADOLID_LOGO_URL = "/Alimentos_Valladolid.webp";
 
 const CARTA_IMAGES = [
   "/carta-precios-01.webp",
@@ -1907,13 +1908,16 @@ export default function Home() {
         style={{ backgroundColor: SOFT_BEIGE }}
       >
         <div className="mx-auto max-w-[1440px] px-5 sm:px-6 md:px-12">
+          {/* Línea superior marrón */}
           <div className="mx-auto max-w-[1280px]">
             <div className="mx-auto h-[52px] w-full max-w-[1280px] rounded-[18px] bg-[#241712] md:h-[64px] md:rounded-[22px]" />
           </div>
 
-          <div className="mx-auto max-w-[1280px] pt-10 md:pt-14">
-            <div className="grid items-center justify-items-center gap-8 sm:grid-cols-2 lg:grid-cols-[minmax(240px,460px)_minmax(120px,170px)_minmax(240px,420px)_minmax(180px,340px)] lg:gap-10">
-              <div className="w-full max-w-[360px] md:max-w-[410px] lg:max-w-[460px]">
+          {/* Imágenes de subvención */}
+          <div className="mx-auto max-w-[1120px] pt-10 md:pt-14">
+            <div className="grid items-center justify-items-center gap-8 sm:grid-cols-2 lg:grid-cols-[minmax(190px,330px)_minmax(90px,120px)_minmax(190px,300px)_minmax(150px,250px)] lg:gap-10">
+              {/* Cartel subvención */}
+              <div className="w-full max-w-[280px] md:max-w-[310px] lg:max-w-[330px]">
                 <div className="rounded-[20px] border border-[#b9a78d]/16 bg-white/42 p-3 shadow-[0_20px_56px_rgba(62,38,25,0.08)] backdrop-blur-[2px] md:rounded-[24px] md:p-4">
                   <div className="overflow-hidden rounded-[14px] bg-white shadow-[0_12px_32px_rgba(0,0,0,0.06)] md:rounded-[16px]">
                     <Image
@@ -1922,24 +1926,26 @@ export default function Home() {
                       width={1240}
                       height={1754}
                       className="h-auto w-full object-contain"
-                      sizes="(max-width: 640px) 86vw, (max-width: 1024px) 42vw, 460px"
+                      sizes="(max-width: 640px) 78vw, (max-width: 1024px) 34vw, 330px"
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="w-[120px] shrink-0 sm:w-[135px] md:w-[150px] lg:w-[165px]">
+              {/* Logo ACECALE */}
+              <div className="w-[95px] shrink-0 sm:w-[105px] md:w-[115px] lg:w-[120px]">
                 <Image
                   src={ACECALE_LOGO_URL}
                   alt="Logo ACECALE"
                   width={700}
                   height={700}
                   className="h-auto w-full object-contain drop-shadow-[0_12px_24px_rgba(62,38,25,0.08)]"
-                  sizes="(max-width: 640px) 120px, (max-width: 1024px) 135px, 165px"
+                  sizes="(max-width: 640px) 95px, (max-width: 1024px) 115px, 120px"
                 />
               </div>
 
-              <div className="w-full max-w-[340px] md:max-w-[380px] lg:max-w-[420px]">
+              {/* Cartel beneficiario */}
+              <div className="w-full max-w-[250px] md:max-w-[280px] lg:max-w-[300px]">
                 <div className="rounded-[20px] border border-[#b9a78d]/16 bg-white/42 p-3 shadow-[0_20px_56px_rgba(62,38,25,0.08)] backdrop-blur-[2px] md:rounded-[24px] md:p-4">
                   <div className="overflow-hidden rounded-[14px] bg-white shadow-[0_12px_32px_rgba(0,0,0,0.06)] md:rounded-[16px]">
                     <Image
@@ -1948,22 +1954,36 @@ export default function Home() {
                       width={1016}
                       height={1510}
                       className="h-auto w-full object-contain"
-                      sizes="(max-width: 640px) 86vw, (max-width: 1024px) 42vw, 420px"
+                      sizes="(max-width: 640px) 78vw, (max-width: 1024px) 34vw, 300px"
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="w-full max-w-[300px] sm:col-span-2 lg:col-span-1 lg:max-w-[340px]">
+              {/* Logo Nos impulsa */}
+              <div className="w-full max-w-[220px] sm:col-span-2 lg:col-span-1 lg:max-w-[250px]">
                 <Image
                   src={NOS_IMPULSA_LOGO_URL}
                   alt="Nos impulsa Junta de Castilla y León"
                   width={1100}
                   height={460}
                   className="h-auto w-full object-contain drop-shadow-[0_12px_24px_rgba(62,38,25,0.08)]"
-                  sizes="(max-width: 640px) 76vw, (max-width: 1024px) 300px, 340px"
+                  sizes="(max-width: 640px) 60vw, (max-width: 1024px) 220px, 250px"
                 />
               </div>
+            </div>
+          </div>
+
+          {/* Logo Alimentos de Valladolid */}
+          <div className="mt-14 flex justify-center md:mt-16">
+            <div className="relative h-[90px] w-full max-w-[260px] md:h-[110px] md:max-w-[320px]">
+              <Image
+                src={ALIMENTOS_VALLADOLID_LOGO_URL}
+                alt="Alimentos de Valladolid"
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 260px, 320px"
+              />
             </div>
           </div>
         </div>
