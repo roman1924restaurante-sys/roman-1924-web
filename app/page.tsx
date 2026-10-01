@@ -60,23 +60,23 @@ const TASTING_MENUS: TastingMenu[] = [
   {
     key: "memoria",
     label: "MENÚ DEGUSTACIÓN",
-    title: "Memoria",
-    price: "108 €",
+    title: "Festín",
+    price: "96 €",
     description:
-      "Un recorrido más amplio, atravesado por la despensa, la huerta, el río, el monte y el horno.",
+      "Una mesa de celebración, abundante y generosa, inspirada en los grandes días de fiesta.",
     summary:
-      "Una propuesta pensada para descubrir la cocina de Román 1924 desde la memoria, el producto y el fuego.",
+      "Un recorrido más amplio por la cocina de Román 1924, donde tradición, producto y memoria se reúnen alrededor de la mesa.",
     images: ["/menu-memoria-01.webp", "/menu-memoria-02.webp"],
   },
   {
     key: "lumbre",
     label: "MENÚ DEGUSTACIÓN",
-    title: "Huerta",
-    price: "68 €",
+    title: "Lumbre",
+    price: "69 €",
     description:
-      "Una lectura más esencial y directa, construida alrededor del fuego, la despensa y los sabores de raíz.",
+      "Una cocina de otoño nacida alrededor de la lumbre, la despensa y los sabores de siempre.",
     summary:
-      "Una experiencia más concisa, sobria y precisa, con el mismo lenguaje de temporada y herencia.",
+      "Un recorrido por la cocina de Román 1924 desde el producto, el fuego y la memoria.",
     images: ["/menu-lumbre-02.webp"],
   },
 ];
@@ -616,16 +616,16 @@ export default function Home() {
                     <div className="w-[25.5%] min-w-[68px] text-center">
                       <div className="flex flex-col items-center gap-[0.12rem]">
                         <p className="w-full text-center font-serif text-[clamp(0.38rem,1.28vw,0.52rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
-                          Créme brûlée de tomate
+                          Lentejas
                         </p>
                         <p className="w-full text-center font-serif text-[clamp(0.38rem,1.28vw,0.52rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
-                          Salmorejo de cereza
-                        </p>
-                        <p className="w-full text-center font-serif text-[clamp(0.38rem,1.28vw,0.52rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
-                          Ravioli de capón
+                          Liebre
                         </p>
                         <p className="w-full text-center font-serif text-[clamp(0.38rem,1.28vw,0.52rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
                           Rable de lechazo
+                        </p>
+                        <p className="w-full text-center font-serif text-[clamp(0.38rem,1.28vw,0.52rem)] leading-[1.14] tracking-[0.001em] text-[#7a5b4d]">
+                          Ballottina
                         </p>
                       </div>
                     </div>
@@ -761,16 +761,16 @@ export default function Home() {
                     <div className="w-[30%] min-w-[110px] text-center">
                       <div className="flex flex-col items-center gap-[0.25rem]">
                         <p className="w-full text-center font-serif text-[clamp(0.62rem,1.08vw,0.86rem)] leading-[1.22] text-[#7a5b4d]">
-                          Créme brûlée de tomate
+                          Lentejas
                         </p>
                         <p className="w-full text-center font-serif text-[clamp(0.62rem,1.08vw,0.86rem)] leading-[1.22] text-[#7a5b4d]">
-                          Salmorejo de cereza
-                        </p>
-                        <p className="w-full text-center font-serif text-[clamp(0.62rem,1.08vw,0.86rem)] leading-[1.22] text-[#7a5b4d]">
-                          Ravioli de capón
+                          Liebre
                         </p>
                         <p className="w-full text-center font-serif text-[clamp(0.62rem,1.08vw,0.86rem)] leading-[1.22] text-[#7a5b4d]">
                           Rable de lechazo
+                        </p>
+                        <p className="w-full text-center font-serif text-[clamp(0.62rem,1.08vw,0.86rem)] leading-[1.22] text-[#7a5b4d]">
+                          Ballottina
                         </p>
                       </div>
                     </div>
@@ -923,16 +923,16 @@ export default function Home() {
                         <div className="w-[29.5%] min-w-[132px] text-center">
                           <div className="flex flex-col items-center gap-[0.24rem]">
                             <p className="w-full text-center font-serif text-[clamp(0.72rem,0.9vw,0.96rem)] leading-[1.22] tracking-[0.001em] text-[#7a5b4d]">
-                              Créme brûlée de tomate
+                              Lentejas
                             </p>
                             <p className="w-full text-center font-serif text-[clamp(0.72rem,0.9vw,0.96rem)] leading-[1.22] tracking-[0.001em] text-[#7a5b4d]">
-                              Salmorejo de cereza
-                            </p>
-                            <p className="w-full text-center font-serif text-[clamp(0.72rem,0.9vw,0.96rem)] leading-[1.22] tracking-[0.001em] text-[#7a5b4d]">
-                              Ravioli de capón
+                              Liebre
                             </p>
                             <p className="w-full text-center font-serif text-[clamp(0.72rem,0.9vw,0.96rem)] leading-[1.22] tracking-[0.001em] text-[#7a5b4d]">
                               Rable de lechazo
+                            </p>
+                            <p className="w-full text-center font-serif text-[clamp(0.72rem,0.9vw,0.96rem)] leading-[1.22] tracking-[0.001em] text-[#7a5b4d]">
+                              Ballottina
                             </p>
                           </div>
                         </div>
