@@ -77,7 +77,7 @@ const TASTING_MENUS: TastingMenu[] = [
       "Una cocina de otoño nacida alrededor de la lumbre, la despensa y los sabores de siempre.",
     summary:
       "Un recorrido por la cocina de Román 1924 desde el producto, el fuego y la memoria.",
-    images: ["/menu-lumbre-02.webp"],
+    images: ["/menu-lumbre-01.webp", "/menu-lumbre-02.webp"],
   },
 ];
 
