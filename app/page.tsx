@@ -1661,14 +1661,14 @@ export default function Home() {
               src="/fondo-footer.webp"
               alt="Fondo footer Román 1924"
               fill
-              className="object-cover object-center opacity-[0.5]"
+              className="object-cover object-center opacity-[0.85]"
               sizes="100vw"
             />
           </div>
 
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-[rgba(20,14,11,0.16)]"
+            className="absolute inset-0 bg-[rgba(20,14,11,0.30)]"
           />
           <div
             aria-hidden="true"
