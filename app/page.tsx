@@ -1778,7 +1778,7 @@ export default function Home() {
                 </p>
 
                 <p className="font-serif text-[clamp(1.05rem,3.4vw,1.35rem)] leading-[1.55] text-white/92">
-                  Miércoles a domingo
+                  Miércoles a lunes
                 </p>
 
                 <p className="mt-3 font-sans text-sm leading-[1.8] text-white/62">
@@ -1788,7 +1788,7 @@ export default function Home() {
                 </p>
 
                 <p className="mt-4 font-sans text-[0.82rem] uppercase tracking-[0.16em] text-white/42">
-                  Lunes y martes cerrado
+                  Martes cerrado
                 </p>
               </div>
 
